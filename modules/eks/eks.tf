@@ -29,46 +29,42 @@ resource "aws_eks_cluster" "main" {
   )
 }
 
-resource "aws_eks_addon" "addons" {
-  for_each                    = var.add_ons
-  cluster_name                = aws_eks_cluster.main.name
-  addon_name                  = each.key
-  addon_version               = each.value
-  resolve_conflicts_on_create = "OVERWRITE"
-}
+# resource "aws_eks_addon" "addons" {
+#   for_each                    = var.add_ons
+#   cluster_name                = aws_eks_cluster.main.name
+#   addon_name                  = each.key
+#   addon_version               = each.value
+#   resolve_conflicts_on_create = "OVERWRITE"
+# }
 
 
 ### EKS NodeGroup
-# resource "aws_eks_node_group" "nodes" {
-#   for_each = var.node_groups
+resource "aws_eks_node_group" "nodes" {
+  for_each = var.node_groups
 
-#   cluster_name    = aws_eks_cluster.main.name
-#   node_group_name = "${local.name}-${each.key}"
-#   node_role_arn   = aws_iam_role.node_group.arn
-#   subnet_ids      = var.subnet_ids
+  cluster_name    = aws_eks_cluster.main.name
+  node_group_name = "${local.name}-${each.key}"
+  node_role_arn   = aws_iam_role.node_group.arn
+  subnet_ids      = var.subnet_ids
 
-#   instance_types = each.value.instance_types
-#   capacity_type  = each.value.capacity_type
+  instance_types = each.value.instance_types
+  capacity_type  = each.value.capacity_type
 
-#   scaling_config {
-#     desired_size = each.value.scaling_config.desired_size
-#     max_size     = each.value.scaling_config.max_size
-#     min_size     = each.value.scaling_config.min_size
-#   }
-#   depends_on = [
-#     aws_eks_cluster.main,
-#     aws_iam_role_policy_attachment.AmazonEKSClusterPolicy,
-#     aws_iam_role_policy_attachment.AmazonEKSVPCResourceController,
-#     aws_iam_role_policy_attachment.cloudwatch_logs,
-#     aws_security_group.cluster
-#   ]
-#   tags = merge(
-#     {
-#       Name = "${local.name}-${each.key}"
-#     },
-#     var.common_tags
-#   )
-# }
+  scaling_config {
+    desired_size = each.value.scaling_config.desired_size
+    max_size     = each.value.scaling_config.max_size
+    min_size     = each.value.scaling_config.min_size
+  }
+  depends_on = [
+    aws_eks_cluster.main,
+    aws_iam_role_policy_attachment.AmazonEKSClusterPolicy,
+    aws_iam_role_policy_attachment.AmazonEKSVPCResourceController,
+    aws_iam_role_policy_attachment.cloudwatch_logs,
+    aws_security_group.cluster
+  ]
+  tags ={var.common_tags}
+
+}
 
 #Security Group for EKS Cluster
 resource "aws_security_group" "cluster" {

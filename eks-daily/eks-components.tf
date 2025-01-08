@@ -25,28 +25,28 @@ module "eks" {
   source               = "../modules/eks"
   environment          = var.environment
   project_name         = var.project_name
-  cluster_version      = "1.31"
+  cluster_version      = "1.30"
   vpc_id               = module.vpc.vpc_id
   subnet_ids           = module.vpc.public_subnet_ids
   allowed_public_cidrs = ["0.0.0.0/0"]
-  add_ons = {
-    vpc-cni                = "v1.18.3-eksbuild.2"
-    kube-proxy             = "v1.30.3-eksbuild.2"
-    coredns                = "v1.11.1-eksbuild.11"
-    eks-pod-identity-agent = "v1.3.2-eksbuild.2"
-  }
-
-  # node_groups = {
-  #   ng-1 = {
-  #     instance_types = ["t3a.small"]
-  #     capacity_type  = "ON_DEMAND"
-  #     scaling_config = {
-  #       desired_size = 2
-  #       max_size     = 4
-  #       min_size     = 1
-  #     }
-  #   }
+  # add_ons = {
+  #   vpc-cni                = "v1.18.3-eksbuild.2"
+  #   kube-proxy             = "v1.30.3-eksbuild.2"
+  #   coredns                = "v1.11.1-eksbuild.11"
+  #   eks-pod-identity-agent = "v1.3.2-eksbuild.2"
   # }
+
+  node_groups = {
+    ng-1 = {
+      instance_types = ["t3a.small"]
+      capacity_type  = "ON_DEMAND"
+      scaling_config = {
+        desired_size = 2
+        max_size     = 4
+        min_size     = 1
+      }
+    }
+  }
 }
 
 # SPOT
