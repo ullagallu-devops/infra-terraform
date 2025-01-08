@@ -1,4 +1,4 @@
-name: Terraform Workflow
+name: Terraform EKS Cluster Deletion
 
 on:
   workflow_dispatch:
