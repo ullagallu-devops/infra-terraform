@@ -9,6 +9,7 @@ terraform {
     bucket = "eks-siva.bapatlas.site"
     key    = "eks-daily/terraform.tfstate"
     region = "ap-south-1"
+    dynamodb_table = "eks-siva.bapatlas.site"
   }
 }
 
