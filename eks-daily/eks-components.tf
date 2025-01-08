@@ -25,7 +25,7 @@ module "eks" {
   source               = "../modules/eks"
   environment          = var.environment
   project_name         = var.project_name
-  cluster_version      = "1.30"
+  cluster_version      = "1.31"
   vpc_id               = module.vpc.vpc_id
   subnet_ids           = module.vpc.public_subnet_ids
   allowed_public_cidrs = ["0.0.0.0/0"]
