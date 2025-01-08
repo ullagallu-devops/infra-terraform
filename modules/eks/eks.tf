@@ -43,7 +43,7 @@ resource "aws_eks_node_group" "nodes" {
   for_each = var.node_groups
 
   cluster_name    = aws_eks_cluster.main.name
-  node_group_name = "${local.name}-${each.key}"
+  node_group_name = each.key
   node_role_arn   = aws_iam_role.node_group.arn
   subnet_ids      = var.subnet_ids
 
@@ -62,7 +62,12 @@ resource "aws_eks_node_group" "nodes" {
     aws_iam_role_policy_attachment.cloudwatch_logs,
     aws_security_group.cluster
   ]
-  tags = var.common_tags
+  tags = merge(
+    {
+      Name = "${local.name}-${each.key}"
+    },
+    var.common_tags
+  )
 
 }
 
