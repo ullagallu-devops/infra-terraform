@@ -94,3 +94,12 @@ resource "aws_security_group" "cluster" {
     Name = "${var.environment}-${var.project_name}"
   }
 }
+
+module "eks-iam-access" {
+  source = "./iam-user-group"
+  for_each = var.eks-iam-access
+  cluster_name      = aws_eks_cluster.main.name
+  kubernetes_groups = each.value["kubernetes_groups"]
+  principal_arn     = each.value["principal_arn"]
+  policy_arn        = each.value["policy_arn"]
+}

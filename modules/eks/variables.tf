@@ -54,5 +54,5 @@ variable "common_tags" {
   type        = map(string)
   default     = {}
 }
-
+variable "eks-iam-access" {}
 variable "add_ons" {}
