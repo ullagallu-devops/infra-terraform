@@ -6,7 +6,7 @@ on:
       - main
 jobs:
   terraform:
-    runs-on: self-hosted
+    runs-on: ullagallu
 
     steps:
     - name: Checkout code
