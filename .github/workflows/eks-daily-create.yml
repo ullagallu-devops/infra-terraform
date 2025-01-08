@@ -1,0 +1,36 @@
+name: Terraform EKS Cluster Creation
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Terraform
+      uses: hashicorp/setup-terraform@v1
+      with:
+        terraform_version: 1.3.5
+
+    - name: Terraform Init (EKS)
+      working-directory: ./eks-daily
+      run: terraform init
+
+    - name: Terraform Validate (EKS)
+      working-directory: ./eks-daily
+      run: terraform validate
+
+    - name: Terraform Plan (EKS)
+      working-directory: ./eks-daily
+      run: terraform plan
+
+    - name: Terraform Apply (EKS)
+      working-directory: ./eks-daily
+      run: terraform apply
+

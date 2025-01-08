@@ -16,19 +16,19 @@ variable "subnet_ids" {
   type        = list(string)
 }
 
-# Node Group Configuration
-variable "node_groups" {
-  description = "Map of node group configurations"
-  type = map(object({
-    instance_types = list(string)
-    capacity_type  = string
-    scaling_config = object({
-      desired_size = number
-      max_size     = number
-      min_size     = number
-    })
-  }))
-}
+# # Node Group Configuration
+# variable "node_groups" {
+#   description = "Map of node group configurations"
+#   type = map(object({
+#     instance_types = list(string)
+#     capacity_type  = string
+#     scaling_config = object({
+#       desired_size = number
+#       max_size     = number
+#       min_size     = number
+#     })
+#   }))
+# }
 
 # Allowed CIDRs for Public Access
 variable "allowed_public_cidrs" {

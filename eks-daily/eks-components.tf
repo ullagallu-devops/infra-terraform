@@ -12,8 +12,11 @@ module "vpc" {
   enable_vpc_flow_logs       = true
   enable_kubernetes_k8s_tags = true
   common_tags = {
-    Developer = "Sivaramakrishna"
+    Author = "Sivaramakrishna"
     Terraform = true
+    Project= var.project_name
+    Environment= var.environment
+
   }
 }
 
@@ -33,17 +36,17 @@ module "eks" {
     eks-pod-identity-agent = "v1.3.4-eksbuild.1"
   }
 
-  node_groups = {
-    ng-1 = {
-      instance_types = ["t3a.small"]
-      capacity_type  = "ON_DEMAND"
-      scaling_config = {
-        desired_size = 2
-        max_size     = 4
-        min_size     = 0
-      }
-    }
-  }
+  # node_groups = {
+  #   ng-1 = {
+  #     instance_types = ["t3a.small"]
+  #     capacity_type  = "ON_DEMAND"
+  #     scaling_config = {
+  #       desired_size = 2
+  #       max_size     = 4
+  #       min_size     = 1
+  #     }
+  #   }
+  # }
 }
 
 # SPOT
