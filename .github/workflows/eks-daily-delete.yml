@@ -15,6 +15,6 @@ jobs:
       working-directory: ./eks-daily
       run: terraform init
 
-    - name: Terraform Destroy
-      if: github.event_name == 'workflow_dispatch'
+    - name: Terraform Destroy (EKS)
+      working-directory: ./eks-daily
       run: terraform destroy -auto-approve
