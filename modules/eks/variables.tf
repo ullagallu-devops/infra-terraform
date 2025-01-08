@@ -55,4 +55,4 @@ variable "common_tags" {
   default     = {}
 }
 
-# variable "add_ons" {}
+variable "add_ons" {}
