@@ -30,10 +30,10 @@ module "eks" {
   subnet_ids           = module.vpc.public_subnet_ids
   allowed_public_cidrs = ["0.0.0.0/0"]
   add_ons = {
-    vpc-cni                = "v1.18.3-eksbuild.2"
+    vpc-cni                = "v1.19.2-eksbuild.1"
     kube-proxy             = "v1.30.3-eksbuild.2"
-    coredns                = "v1.11.1-eksbuild.11"
-    eks-pod-identity-agent = "v1.3.2-eksbuild.2"
+    coredns                = "v1.11.4-eksbuild.1"
+    eks-pod-identity-agent = "v1.3.4-eksbuild.1"
   }
 
   # node_groups = {
