@@ -44,7 +44,7 @@ module "eks" {
   }
   node_groups = {
     ng-1 = {
-      instance_types = ["t3a.small"]
+      instance_types = ["t3a.medium"]
       capacity_type  = "ON_DEMAND"
       scaling_config = {
         desired_size = 2

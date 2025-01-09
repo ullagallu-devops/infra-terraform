@@ -62,13 +62,6 @@ resource "aws_eks_node_group" "nodes" {
     aws_iam_role_policy_attachment.cloudwatch_logs,
     aws_security_group.cluster
   ]
-  tags = merge(
-    {
-      Name = "${local.name}-${each.key}"
-    },
-    var.common_tags
-  )
-
 }
 
 #Security Group for EKS Cluster
