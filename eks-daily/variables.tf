@@ -1,6 +1,6 @@
 variable "environment" {
-  default = "dev"
+  default = "test"
 }
 variable "project_name" {
-  default = "eks"
+  default = "pract"
 }
