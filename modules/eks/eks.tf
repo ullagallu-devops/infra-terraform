@@ -41,7 +41,8 @@ resource "aws_eks_addon" "addons" {
 ### EKS NodeGroup
 resource "aws_eks_node_group" "nodes" {
   for_each = var.node_groups
-
+  
+  node_group_name_prefix = local.name
   cluster_name    = aws_eks_cluster.main.name
   node_group_name = each.key
   node_role_arn   = aws_iam_role.node_group.arn
