@@ -41,6 +41,11 @@ module "eks" {
       policy_arn    = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
       kubernetes_groups = []
     }
+    alma-user={
+      principal_arn = "arn:aws:iam::522814728660:user/eks-siva.bapatlas.site"
+      policy_arn    = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
+      kubernetes_groups = []
+    }
   }
   node_groups = {
     blue = {
