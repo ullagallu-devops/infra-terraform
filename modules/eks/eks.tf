@@ -29,13 +29,13 @@ resource "aws_eks_cluster" "main" {
   )
 }
 
-resource "aws_eks_addon" "addons" {
-  for_each                    = var.add_ons
-  cluster_name                = aws_eks_cluster.main.name
-  addon_name                  = each.key
-  addon_version               = each.value
-  resolve_conflicts_on_create = "OVERWRITE"
-}
+# resource "aws_eks_addon" "addons" {
+#   for_each                    = var.add_ons
+#   cluster_name                = aws_eks_cluster.main.name
+#   addon_name                  = each.key
+#   addon_version               = each.value
+#   resolve_conflicts_on_create = "OVERWRITE"
+# }
 
 
 ### EKS NodeGroup

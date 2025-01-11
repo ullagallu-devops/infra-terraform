@@ -55,4 +55,4 @@ variable "common_tags" {
   default     = {}
 }
 variable "eks-iam-access" {}
-variable "add_ons" {}
+# variable "add_ons" {}
