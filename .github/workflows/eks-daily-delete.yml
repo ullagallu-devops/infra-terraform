@@ -17,4 +17,4 @@ jobs:
 
     - name: Terraform Destroy (EKS)
       working-directory: ./eks-daily
-      run: terraform destroy -auto-approve
+      run: terraform destroy
