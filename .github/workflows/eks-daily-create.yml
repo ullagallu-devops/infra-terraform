@@ -27,5 +27,5 @@ jobs:
 
     - name: Terraform Apply (EKS)
       working-directory: ./eks-daily
-      run: terraform apply
+      run: terraform apply -auto-approve
 
