@@ -36,14 +36,14 @@ module "eks" {
     eks-pod-identity-agent = "v1.3.4-eksbuild.1"
   }
   eks-iam-access = {
-    h-user={
+    admin-user={
       principal_arn = "arn:aws:iam::522814728660:root"
       policy_arn    = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
       kubernetes_groups = []
     }
   }
   node_groups = {
-    ng-1 = {
+    blue = {
       instance_types = ["t3a.medium"]
       capacity_type  = "ON_DEMAND"
       scaling_config = {
