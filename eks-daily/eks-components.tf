@@ -32,7 +32,7 @@ module "eks" {
   add_ons = {
     vpc-cni                = "v1.19.0-eksbuild.1"
     kube-proxy             = "v1.30.6-eksbuild.3"
-    coredns                = "1.11.4-eksbuild.2"
+    coredns                = "v1.11.1-eksbuild.8"
     eks-pod-identity-agent = "v1.3.4-eksbuild.1"
   }
   eks-iam-access = {
