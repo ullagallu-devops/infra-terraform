@@ -1,9 +1,9 @@
 locals {
-  sg_name = "${var.project_name}-${var.environment}-${var.name}"
+  name = "${var.project_name}-${var.environment}-${var.sg_name}"
 }
 
 resource "aws_security_group" "example" {
-  name        = local.sg_name
+  name        = local.name
   description = var.sg_description
   vpc_id      = var.vpc_id
 
@@ -18,22 +18,18 @@ resource "aws_security_group" "example" {
     }
   }
 
-  dynamic "egress" {
-    for_each = var.egress_rules
-    content {
-      description = egress.value.description
-      from_port   = egress.value.from_port
-      to_port     = egress.value.to_port
-      protocol    = egress.value.protocol
-      cidr_blocks = egress.value.cidr_blocks
-    }
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   tags = merge(
     var.common_tags,
     var.sg_tags,
     {
-      Name = local.sg_name
+      Name = local.name
     }
   )
 }
