@@ -2,7 +2,7 @@ locals {
   public_subnet_id = element(split(",", data.aws_ssm_parameter.public_subnet_ids.value), 0)
 }
 module "bastion" {
-  source                 = "../../../modules/ec2"
+  source                 = "../../../../modules/ec2"
   environment            = var.environment
   project_name           = var.project_name
   ami                    = data.aws_ami.amazon_linux.id
@@ -53,7 +53,7 @@ resource "null_resource" "bastion" {
 # untaint was used to avoid resource re-creation
 
 module "vpn" {
-  source                 = "../../../modules/ec2"
+  source                 = "../../../../modules/ec2"
   environment            = var.environment
   project_name           = var.project_name
   ami                    = data.aws_ami.openvpn.id

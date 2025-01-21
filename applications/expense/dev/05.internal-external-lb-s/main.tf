@@ -3,7 +3,7 @@ locals {
   external_alb = "external"
 }
 module "internal_lb" {
-  source                     = "../../../modules/alb"
+  source                     = "../../../../modules/alb"
   environment                = var.environment
   project_name               = var.project_name
   common_tags                = var.common_tags
@@ -22,7 +22,7 @@ module "internal_lb" {
 
 
 module "external_lb" {
-  source                     = "../../../modules/alb"
+  source                     = "../../../../modules/alb"
   environment                = var.environment
   project_name               = var.project_name
   common_tags                = var.common_tags

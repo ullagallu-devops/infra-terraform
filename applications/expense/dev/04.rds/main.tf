@@ -1,5 +1,5 @@
 module "mysql_expense" {
-  source                 = "../../../modules/rds"
+  source                 = "../../../../modules/rds"
   environment            = var.environment
   project_name           = var.project_name
   common_tags            = var.common_tags

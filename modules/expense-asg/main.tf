@@ -1,6 +1,6 @@
 # Locals
 locals {
-    name = "${var.environment}-${var.project_name}-${var.component}"
+    name = "${var.environment}-${var.project_name}"
 }
 # Launch Template
 resource "aws_launch_template" "test" {
@@ -28,30 +28,23 @@ resource "aws_lb_target_group" "test" {
   protocol = var.protocol
   vpc_id   = var.vpc_id
   health_check {
-    path                = "/health"
-    protocol            = var.protocol
-    port                = var.port
-    interval            = var.interval
-    timeout             = var.timeout 
-    healthy_threshold   = var.healthy_threshold
-    unhealthy_threshold = var.unhealthy_threshold
-    matcher = var.mather
+    path = "/health"
+    healthy_threshold = 2
+    unhealthy_threshold = 5
+    protocol = "HTTP"
+    port = var.port
+    matcher = 200
   }
 }
-
 # Autoscaling Group
-resource "aws_placement_group" "test" {
-  name     = "test"
-  strategy = "cluster"
-}
-
 resource "aws_autoscaling_group" "bar" {
   name                      = local.name
   max_size                  = var.asg_max_size
   min_size                  = var.asg_min_size
   health_check_grace_period = var.health_check_grace_period
-  health_check_type         = var.health_check_type
-  desired_capacity          = var.desired_capacity  
+  health_check_type         = "ELB"
+  desired_capacity          = var.desired_capacity
+  target_group_arns = [aws_lb_target_group.test.arn]  
   launch_template {
         id      = aws_launch_template.test.id
         version = "$Latest"
@@ -63,7 +56,7 @@ resource "aws_autoscaling_group" "bar" {
     preferences {
       min_healthy_percentage = 50
     }
-    triggers = ["LaunchTemplate"]
+    triggers = ["launch_template"]
   }
 
   tag {
@@ -86,7 +79,7 @@ resource "aws_autoscaling_group" "bar" {
 resource "aws_autoscaling_policy" "bat" {
   name                   = local.name
   autoscaling_group_name = aws_autoscaling_group.bar.name
-  policy_type = var.policy_type
+  policy_type = "TargetTrackingScaling"
   target_tracking_configuration {
     predefined_metric_specification {
       predefined_metric_type = "ASGAverageCPUUtilization"
@@ -97,7 +90,7 @@ resource "aws_autoscaling_policy" "bat" {
 }
 
 # Listner
-resource "aws_lb_listener_rule" "static" {
+resource "aws_lb_listener_rule" "http" {
   listener_arn = var.listener_arn
   priority     = 100
 

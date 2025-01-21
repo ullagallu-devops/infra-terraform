@@ -7,6 +7,7 @@ folders=(
   "03.bastion-vpn/"
   "04.rds/"
   "05.internal-external-lb-s/"
+  "06.backend-frontend-asg"
 )
 
 # Start the overall timer

@@ -1,5 +1,5 @@
-module "expense-vpc" {
-  source              = "../../../modules/vpc"
+module "expense_vpc" {
+  source              = "../../../../modules/vpc"
   azs                 = var.azs
   public_subnet_cidr  = var.public_subnet_cidr
   private_subnet_cidr = var.private_subnet_cidr

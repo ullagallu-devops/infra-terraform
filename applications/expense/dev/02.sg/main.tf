@@ -1,5 +1,5 @@
 module "bastion" {
-  source         = "../../../modules/sg"
+  source         = "../../../../modules/sg"
   environment    = var.environment
   project_name   = var.project_name
   sg_name        = "bastion"
@@ -8,7 +8,7 @@ module "bastion" {
   common_tags    = var.common_tags
 }
 module "vpn" {
-  source         = "../../../modules/sg"
+  source         = "../../../../modules/sg"
   environment    = var.environment
   project_name   = var.project_name
   sg_name        = "vpn"
@@ -17,7 +17,7 @@ module "vpn" {
   common_tags    = var.common_tags
 }
 module "db" {
-  source         = "../../../modules/sg"
+  source         = "../../../../modules/sg"
   environment    = var.environment
   project_name   = var.project_name
   sg_name        = "db"
@@ -26,7 +26,7 @@ module "db" {
   common_tags    = var.common_tags
 }
 module "backend" {
-  source         = "../../../modules/sg"
+  source         = "../../../../modules/sg"
   environment    = var.environment
   project_name   = var.project_name
   sg_name        = "backend"
@@ -35,7 +35,7 @@ module "backend" {
   common_tags    = var.common_tags
 }
 module "frontend" {
-  source         = "../../../modules/sg"
+  source         = "../../../../modules/sg"
   environment    = var.environment
   project_name   = var.project_name
   sg_name        = "frontend"
@@ -44,7 +44,7 @@ module "frontend" {
   common_tags    = var.common_tags
 }
 module "external_lb" {
-  source         = "../../../modules/sg"
+  source         = "../../../../modules/sg"
   environment    = var.environment
   project_name   = var.project_name
   sg_name        = "external_lb"
@@ -53,7 +53,7 @@ module "external_lb" {
   common_tags    = var.common_tags
 }
 module "internal_lb" {
-  source         = "../../../modules/sg"
+  source         = "../../../../modules/sg"
   environment    = var.environment
   project_name   = var.project_name
   sg_name        = "internal_lb"
@@ -62,7 +62,7 @@ module "internal_lb" {
   common_tags    = var.common_tags
 }
 
-# DB
+# DB Rules
 resource "aws_security_group_rule" "db_backend" {
   description              = "Allow MySQL from backend"
   type                     = "ingress"
@@ -92,6 +92,115 @@ resource "aws_security_group_rule" "db_bastion" {
   source_security_group_id = module.bastion.sg_id
   security_group_id        = module.db.sg_id
 }
+# Backend Rules
+resource "aws_security_group_rule" "backend_internal_lb" {
+  description              = "allow traffic from internal_lb"
+  type                     = "ingress"
+  from_port                = 8080
+  to_port                  = 8080
+  protocol                 = "tcp"
+  source_security_group_id = module.internal_lb.sg_id
+  security_group_id        = module.backend.sg_id
+}
+
+resource "aws_security_group_rule" "backend_bastion" {
+  description              = "allow traffic from bastion"
+  type                     = "ingress"
+  from_port                = 8080
+  to_port                  = 8080
+  protocol                 = "tcp"
+  source_security_group_id = module.bastion.sg_id
+  security_group_id        = module.backend.sg_id
+}
+
+resource "aws_security_group_rule" "backend_vpn" {
+  description              = "allow traffic from vpn"
+  type                     = "ingress"
+  from_port                = 8080
+  to_port                  = 8080
+  protocol                 = "tcp"
+  source_security_group_id = module.vpn.sg_id
+  security_group_id        = module.backend.sg_id
+}
+# Internal ALB SG Rules
+resource "aws_security_group_rule" "vpn_internal_alb" {
+  description              = "allow traffic from vpn"
+  type                     = "ingress"
+  from_port                = 80
+  to_port                  = 80
+  protocol                 = "tcp"
+  source_security_group_id = module.vpn.sg_id
+  security_group_id        = module.internal_lb.sg_id
+}
+resource "aws_security_group_rule" "bastion_internal_alb" {
+  description              = "allow traffic from vpn"
+  type                     = "ingress"
+  from_port                = 80
+  to_port                  = 80
+  protocol                 = "tcp"
+  source_security_group_id = module.bastion.sg_id
+  security_group_id        = module.internal_lb.sg_id
+}
+resource "aws_security_group_rule" "frontend_internal_alb" {
+  description              = "allow traffic from vpn"
+  type                     = "ingress"
+  from_port                = 80
+  to_port                  = 80
+  protocol                 = "tcp"
+  source_security_group_id = module.frontend.sg_id
+  security_group_id        = module.internal_lb.sg_id
+}
+# Frontend SG Rules
+resource "aws_security_group_rule" "frontend_external_lb" {
+  description              = "allow traffic from external_lb"
+  type                     = "ingress"
+  from_port                = 80
+  to_port                  = 80
+  protocol                 = "tcp"
+  source_security_group_id = module.external_lb.sg_id
+  security_group_id        = module.frontend.sg_id
+}
+resource "aws_security_group_rule" "frontend_bastion" {
+  description              = "allow traffic from bastion"
+  type                     = "ingress"
+  from_port                = 80
+  to_port                  = 80
+  protocol                 = "tcp"
+  source_security_group_id = module.bastion.sg_id
+  security_group_id        = module.frontend.sg_id
+}
+
+resource "aws_security_group_rule" "frontend_vpn" {
+  description              = "allow traffic from vpn"
+  type                     = "ingress"
+  from_port                = 80
+  to_port                  = 80
+  protocol                 = "tcp"
+  source_security_group_id = module.vpn.sg_id
+  security_group_id        = module.frontend.sg_id
+}
+
+# External LB SG Rules
+resource "aws_security_group_rule" "external_lb_internet_http" {
+  description       = "allow traffic from internet"
+  type              = "ingress"
+  from_port         = 80
+  to_port           = 80
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = module.external_lb.sg_id
+}
+
+resource "aws_security_group_rule" "external_lb_internet_https" {
+  description       = "allow traffic from internet"
+  type              = "ingress"
+  from_port         = 443
+  to_port           = 443
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = module.external_lb.sg_id
+}
+
 
 # Bastion
 resource "aws_security_group_rule" "bastion_internet" {
@@ -142,95 +251,3 @@ resource "aws_security_group_rule" "vpn_udp" {
   security_group_id = module.vpn.sg_id
 }
 
-# Backend
-resource "aws_security_group_rule" "backend_internal_lb" {
-  description              = "allow traffic from internal_lb"
-  type                     = "ingress"
-  from_port                = 8080
-  to_port                  = 8080
-  protocol                 = "tcp"
-  source_security_group_id = module.internal_lb.sg_id
-  security_group_id        = module.backend.sg_id
-}
-
-resource "aws_security_group_rule" "backend_bastion" {
-  description              = "allow traffic from bastion"
-  type                     = "ingress"
-  from_port                = 8080
-  to_port                  = 8080
-  protocol                 = "tcp"
-  source_security_group_id = module.bastion.sg_id
-  security_group_id        = module.backend.sg_id
-}
-
-resource "aws_security_group_rule" "backend_vpn" {
-  description              = "allow traffic from vpn"
-  type                     = "ingress"
-  from_port                = 8080
-  to_port                  = 8080
-  protocol                 = "tcp"
-  source_security_group_id = module.vpn.sg_id
-  security_group_id        = module.backend.sg_id
-}
-
-# Frontend
-resource "aws_security_group_rule" "frontend_external_lb" {
-  description              = "allow traffic from external_lb"
-  type                     = "ingress"
-  from_port                = 80
-  to_port                  = 80
-  protocol                 = "tcp"
-  source_security_group_id = module.external_lb.sg_id
-  security_group_id        = module.frontend.sg_id
-}
-resource "aws_security_group_rule" "frontend_bastion" {
-  description              = "allow traffic from bastion"
-  type                     = "ingress"
-  from_port                = 80
-  to_port                  = 80
-  protocol                 = "tcp"
-  source_security_group_id = module.bastion.sg_id
-  security_group_id        = module.frontend.sg_id
-}
-
-resource "aws_security_group_rule" "frontend_vpn" {
-  description              = "allow traffic from vpn"
-  type                     = "ingress"
-  from_port                = 80
-  to_port                  = 80
-  protocol                 = "tcp"
-  source_security_group_id = module.vpn.sg_id
-  security_group_id        = module.frontend.sg_id
-}
-
-# Internal LB
-resource "aws_security_group_rule" "frontend_internal_lb" {
-  description              = "allow traffic from frontend"
-  type                     = "ingress"
-  from_port                = 80
-  to_port                  = 80
-  protocol                 = "tcp"
-  source_security_group_id = module.frontend.sg_id
-  security_group_id        = module.internal_lb.sg_id
-}
-
-# External LB
-resource "aws_security_group_rule" "external_lb_internet_http" {
-  description       = "allow traffic from internet"
-  type              = "ingress"
-  from_port         = 80
-  to_port           = 80
-  protocol          = "tcp"
-  cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = module.external_lb.sg_id
-}
-
-resource "aws_security_group_rule" "external_lb_internet_https" {
-  description       = "allow traffic from internet"
-  type              = "ingress"
-  from_port         = 443
-  to_port           = 443
-  protocol          = "tcp"
-  cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = module.external_lb.sg_id
-}

@@ -1,6 +1,6 @@
 ### VPC
 module "vpc" {
-  source                     = "../modules/vpc"
+  source                     = "../../modules/vpc"
   vpc_cidr                   = "192.168.0.0/16"
   environment                = var.environment
   project_name               = var.project_name
