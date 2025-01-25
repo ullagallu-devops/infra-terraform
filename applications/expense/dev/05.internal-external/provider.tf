@@ -7,7 +7,7 @@ terraform {
   }
   backend "s3" {
     bucket = "spa-example-ecs-rds"
-    key    = "asg/terraform.tfstate"
+    key    = "internal_external/terraform.tfstate"
     region = "us-east-1"
   }
 }

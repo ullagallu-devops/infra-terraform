@@ -1,6 +1,9 @@
-output "alb_arn" {
+output "arn" {
   value = aws_lb.test.arn
 }
-output "internal_listner" {
-  value = aws_lb_listener.listner.arn
+output "http_listner" {
+  value = aws_lb_listener.http[*].arn
+}
+output "https_listner" {
+  value = aws_lb_listener.https[*].arn
 }

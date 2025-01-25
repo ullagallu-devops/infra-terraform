@@ -1,5 +1,6 @@
 locals {
-  domain_name = "${var.environment}-${var.project_name}-${var.component}"
+  name = "${var.environment}-${var.project_name}-${var.component}"
+  domain_name = "${var.environment}-${var.project_name}-${var.component}.${var.zone_name}"
 }
 resource "aws_acm_certificate" "example" {
   domain_name       = local.domain_name
@@ -7,7 +8,7 @@ resource "aws_acm_certificate" "example" {
 
   tags = merge(
     {
-      Name = local.domain_name
+      Name = local.name
     },
     var.common_tags
   )
@@ -38,9 +39,3 @@ resource "aws_acm_certificate_validation" "example" {
   certificate_arn         = aws_acm_certificate.example.arn
   validation_record_fqdns = [for record in aws_route53_record.example : record.fqdn]
 }
-
-variable "zone_id" {}
-variable "environment" {}
-variable "project_name" {}
-variable "component" {}
-variable "common_tags" {}

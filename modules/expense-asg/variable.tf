@@ -13,7 +13,7 @@ variable "vpc_security_group_ids" {}
 
 # TargetGroup
 variable "port" {}
-
+variable "health_check_path" {}
 variable "vpc_id" {}
 
 # ASG
