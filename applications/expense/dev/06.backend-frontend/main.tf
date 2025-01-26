@@ -16,11 +16,14 @@ module "backend_asg"{
   instance_type = var.instance_type
   key_name = var.key_name
   vpc_security_group_ids = [data.aws_ssm_parameter.backend.value]
+  health_check_grace_period = var.health_check_grace_period
+
   port = 8080
   health_check_path = "/health"
   vpc_id = local.vpc_id
   asg_max_size = var.asg_max_size
   asg_min_size = var.asg_min_size
+  desired_capacity = var.desired_capacity
   subnets = split(",",data.aws_ssm_parameter.private_subnet_ids)
   target_value = var.target_value
 
