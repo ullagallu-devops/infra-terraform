@@ -2,6 +2,7 @@
 
 # List of folders in the required order (reverse for destroy)
 folders=(
+  "06.backend-frontend/"
   "05.internal-external/"
   "04.rds/"
   "03.bastion-vpn/"
