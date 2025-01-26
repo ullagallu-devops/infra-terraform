@@ -1,29 +1,11 @@
 variable "environment" {}
 variable "project_name" {}
-
-variable "common_tags" {}
-
+variable "instance_type"{}
 # Launch Template
-
-variable "instance_type" {}
-variable "key_name" {}
-variable "vpc_security_group_ids" {}
-
-# TargetGroup
-variable "port" {}
-variable "health_check_path" {}
-variable "vpc_id" {}
-
+variable "key_name"{}
 # ASG
 variable "asg_max_size" {}
 variable "asg_min_size" {}
 variable "health_check_grace_period" {}
-variable "desired_capacity" {}
-variable "subnets" {}
-
 # ASG Policy
 variable "target_value" {}
-
-# Listener
-variable "listener_arn" {}
-variable "host_header_value" {}
