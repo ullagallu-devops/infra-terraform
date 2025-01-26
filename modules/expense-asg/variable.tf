@@ -3,8 +3,6 @@ variable "project_name" {}
 
 variable "common_tags" {}
 
-
-variable "protocol" {}
 # Launch Template
 variable "ami_id" {}
 variable "instance_type" {}

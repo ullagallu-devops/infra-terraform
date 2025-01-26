@@ -2,7 +2,7 @@
 locals {
     name = "${var.environment}-${var.project_name}"
 }
-resource "aws_launch_template" "app" {
+resource "aws_launch_template" "test" {
   name               = local.name
   image_id           = var.ami_id
   instance_type      = var.instance_type
@@ -14,17 +14,17 @@ resource "aws_launch_template" "app" {
     tags = merge({ Name = "${var.environment}-${var.project_name}" }, var.common_tags)
   }
 }
-resource "aws_lb_target_group" "app" {
+resource "aws_lb_target_group" "test" {
   name     = local.name
   port     = var.port
-  protocol = var.protocol
+  protocol = "HTTP"
   vpc_id   = var.vpc_id
 
   health_check {
     path                = var.health_check_path
     healthy_threshold   = 2
     unhealthy_threshold = 5
-    protocol            = var.protocol
+    protocol            = "HTTP"
     port                = var.port
     matcher             = "200"
   }
@@ -94,7 +94,7 @@ resource "aws_lb_listener_rule" "http" {
   }
   condition {
     host_header {
-      values = var.host_header_value
+      values = "${local.name}-${var.host_header_value}"
     }
   }
 }
