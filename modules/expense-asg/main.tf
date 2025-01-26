@@ -1,6 +1,6 @@
 # Locals
 locals {
-    name = "${var.environment}-${var.project_name}"
+    name = "${var.environment}-${var.project_name}-${var.component}"
 }
 resource "aws_launch_template" "test" {
   name               = local.name
@@ -94,7 +94,7 @@ resource "aws_lb_listener_rule" "http" {
   }
   condition {
     host_header {
-      values = ["${local.name}-${var.host_header_value}.${var.zone_name}"]
+      values = ["${local.name}.${var.zone_name}"]
     }
   }
 }

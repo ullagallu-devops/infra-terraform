@@ -26,5 +26,5 @@ variable "target_value" {}
 
 # Listener
 variable "listener_arn" {}
-variable "host_header_value" {}
+variable "component" {}
 variable "zone_name"{}
