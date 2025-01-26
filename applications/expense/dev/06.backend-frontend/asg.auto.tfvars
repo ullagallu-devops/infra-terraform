@@ -6,3 +6,4 @@ asg_max_size = 1
 asg_min_size = 1
 health_check_grace_period = 90
 target_value = 10
+zone_name = "bapatlas.site"

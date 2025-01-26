@@ -10,3 +10,4 @@ variable "desired_capacity" {}
 variable "health_check_grace_period" {}
 # ASG Policy
 variable "target_value" {}
+variable "zone_name"{}

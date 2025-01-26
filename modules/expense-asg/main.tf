@@ -94,7 +94,7 @@ resource "aws_lb_listener_rule" "http" {
   }
   condition {
     host_header {
-      values = "${local.name}-${var.host_header_value}"
+      values = ["${local.name}-${var.host_header_value}.${var.zone_name}"]
     }
   }
 }
