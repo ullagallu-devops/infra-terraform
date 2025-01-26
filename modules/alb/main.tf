@@ -28,8 +28,8 @@ resource "aws_lb_listener" "http" {
     type = "fixed-response"
 
     fixed_response {
-      content_type = "text/plain"
-      message_body = "Fixed response content 80"
+      content_type = "text/html"
+      message_body = "<h1>Fixed response content 80</h1>"
       status_code  = "200"
     }
   }
@@ -47,8 +47,8 @@ resource "aws_lb_listener" "https" {
     type = "fixed-response"
 
     fixed_response {
-      content_type = "text/plain"
-      message_body = "Fixed response content 443"
+      content_type = "text/html"
+      message_body = "<h1>Fixed response content 443</h1>"
       status_code  = "200"
     }
   }

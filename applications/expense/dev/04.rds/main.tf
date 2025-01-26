@@ -18,7 +18,7 @@ module "mysql_expense" {
 
 resource "aws_route53_record" "www" {
   zone_id = var.zone_id
-  name    = "${var.environment}-${var.project_name}"
+  name    = "${var.environment}-${var.project_name}-rds"
   type    = "CNAME"
   ttl     = 300
   records = [module.mysql_expense.db_address]
