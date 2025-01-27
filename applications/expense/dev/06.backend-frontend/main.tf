@@ -33,6 +33,7 @@ module "backend_asg"{
 }
 
 module "frontend_asg"{
+    depends_on = [ module.backend_asg ]
     source = "../../../../modules/expense-asg"
     environment = var.environment
     project_name = var.project_name
@@ -50,7 +51,7 @@ module "frontend_asg"{
   health_check_grace_period = var.health_check_grace_period
 
   port = 80
-  health_check_path = "/health"
+  health_check_path = "/"
   vpc_id = local.vpc_id
   asg_max_size = var.asg_max_size
   asg_min_size = var.asg_min_size
