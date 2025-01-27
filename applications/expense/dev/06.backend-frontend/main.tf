@@ -56,7 +56,7 @@ module "frontend_asg"{
   asg_max_size = var.asg_max_size
   asg_min_size = var.asg_min_size
   desired_capacity = var.desired_capacity
-  subnets = split(",",data.aws_ssm_parameter.public_subnet_ids.value)
+  subnets = split(",",data.aws_ssm_parameter.private_subnet_ids.value)
   target_value = var.target_value
 
   listener_arn = data.aws_ssm_parameter.https_listner.value
