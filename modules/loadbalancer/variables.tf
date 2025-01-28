@@ -65,3 +65,8 @@ variable "component" {
   type = string
   description = "Please enter component name"
 }
+
+variable "redirect_http_https" {
+  type = bool
+  description = "Enter bool to redorect traffic or not"
+}

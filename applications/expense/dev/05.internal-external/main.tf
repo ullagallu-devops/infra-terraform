@@ -17,6 +17,7 @@ module "expense_acm_external" {
   component = local.external_alb
   zone_id   = var.zone_id
   zone_name = "bapatlas.site"
+  redirect_http_https = false
 
 }
 module "expense_internal" {
@@ -63,4 +64,5 @@ module "expense_external" {
   certificate_arn            = module.expense_acm_external.certificate_arn
   zone_id                    = var.zone_id
   component                  = local.external_alb
+  redirect_http_https = true
 }
