@@ -17,7 +17,6 @@ module "expense_acm_external" {
   component = local.external_alb
   zone_id   = var.zone_id
   zone_name = "bapatlas.site"
-  redirect_http_https = false
 
 }
 module "expense_internal" {
@@ -38,6 +37,7 @@ module "expense_internal" {
   enable_deletion_protection = false
   create_http_listener       = true
   create_https_listener      = false
+  redirect_http_https        = false
   zone_id                    = var.zone_id
   component                  = local.internal_alb
 }
