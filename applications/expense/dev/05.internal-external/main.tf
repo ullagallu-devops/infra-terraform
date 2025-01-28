@@ -59,10 +59,10 @@ module "expense_external" {
   alb_security_group         = [data.aws_ssm_parameter.external_lb_sg.value]
   alb_subnets                = split(",",data.aws_ssm_parameter.public_subnet_ids.value)
   enable_deletion_protection = false
-  create_http_listener       = false
+  create_http_listener       = true
   create_https_listener      = true
+  redirect_http_https        = true
   certificate_arn            = module.expense_acm_external.certificate_arn
   zone_id                    = var.zone_id
   component                  = local.external_alb
-  redirect_http_https = true
 }
