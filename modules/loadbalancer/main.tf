@@ -35,22 +35,6 @@ resource "aws_lb_listener" "http" {
   }
 }
 
-resource "aws_lb_listener" "redirect" {
-  count = var.redirect_http_https ? 1 : 0
-  load_balancer_arn = aws_lb.test.arn
-  port              = "80"
-  protocol          = "HTTP"
-
-  default_action {
-    type = "redirect"
-    redirect {
-      protocol    = "HTTPS"
-      port        = "443"
-      status_code = "HTTP_301"
-    }
-  }
-}
-
 resource "aws_lb_listener" "https" {
   count             = var.create_https_listener ? 1 : 0
   load_balancer_arn = aws_lb.test.arn

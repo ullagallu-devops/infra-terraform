@@ -37,7 +37,6 @@ module "expense_internal" {
   enable_deletion_protection = false
   create_http_listener       = true
   create_https_listener      = false
-  redirect_http_https        = false
   zone_id                    = var.zone_id
   component                  = local.internal_alb
 }
@@ -61,7 +60,6 @@ module "expense_external" {
   enable_deletion_protection = false
   create_http_listener       = true
   create_https_listener      = true
-  redirect_http_https        = true
   certificate_arn            = module.expense_acm_external.certificate_arn
   zone_id                    = var.zone_id
   component                  = local.external_alb
