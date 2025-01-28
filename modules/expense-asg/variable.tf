@@ -28,3 +28,7 @@ variable "target_value" {}
 variable "listener_arn" {}
 variable "component" {}
 variable "zone_name"{}
+# variable "create_redirect_r_n"{}
+# variable "http_listener_arn"{}
+
+

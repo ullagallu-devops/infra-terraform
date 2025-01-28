@@ -83,8 +83,8 @@ resource "aws_autoscaling_policy" "aap" {
   }
 }
 
-# Listner
-resource "aws_lb_listener_rule" "http" {
+# Listner Rules
+resource "aws_lb_listener_rule" "https" {
   listener_arn = var.listener_arn
   priority     = 100
 
@@ -98,3 +98,21 @@ resource "aws_lb_listener_rule" "http" {
     }
   }
 }
+
+# Listner Reidirect Rule
+
+# resource "aws_lb_listener_rule" "redirect_http_to_https" {
+#   count = var.create_redirect_r_n ? 1 : 0
+
+#   listener_arn = var.http_listener_arn
+
+#   action {
+#     type = "redirect"
+
+#     redirect {
+#       port        = "443"
+#       protocol    = "HTTPS"
+#       status_code = "HTTP_301"
+#     }
+#   }
+# }

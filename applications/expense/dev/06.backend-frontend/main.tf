@@ -27,7 +27,8 @@ module "backend_asg"{
   subnets = split(",",data.aws_ssm_parameter.private_subnet_ids.value)
   target_value = var.target_value
 
-  listener_arn = data.aws_ssm_parameter.http_listner.value
+  listener_arn = data.aws_ssm_parameter.internal_http_listner.value
+  create_redirect_r_n = false
   component = "internal"
   zone_name = var.zone_name
 }
@@ -59,7 +60,7 @@ module "frontend_asg"{
   subnets = split(",",data.aws_ssm_parameter.private_subnet_ids.value)
   target_value = var.target_value
 
-  listener_arn = data.aws_ssm_parameter.https_listner.value
+  listener_arn = data.aws_ssm_parameter.external_https_listner.value
   component = "external"
   zone_name = var.zone_name
 }

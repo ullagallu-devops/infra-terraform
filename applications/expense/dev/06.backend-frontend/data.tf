@@ -1,8 +1,12 @@
-data "aws_ssm_parameter" "http_listner" {
-  name  = "/${var.environment}/${var.project_name}/http-listner"
+data "aws_ssm_parameter" "internal_http_listner" {
+  name  = "/${var.environment}/${var.project_name}/internal-http-listner"
+
 }
-data "aws_ssm_parameter" "https_listner" {
-  name  = "/${var.environment}/${var.project_name}/https-listner"
+data "aws_ssm_parameter" "external_http_listner" {
+  name  = "/${var.environment}/${var.project_name}/external-http-listner"
+}
+data "aws_ssm_parameter" "external_https_listner" {
+  name  = "/${var.environment}/${var.project_name}/external-https-listner"
 }
 data "aws_ssm_parameter" "private_subnet_ids" {
   name = "/${var.environment}/${var.project_name}/private_subnet_ids"
