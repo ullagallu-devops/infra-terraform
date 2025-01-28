@@ -28,7 +28,6 @@ module "backend_asg"{
   target_value = var.target_value
 
   listener_arn = data.aws_ssm_parameter.internal_http_listner.value
-  create_redirect_r_n = false
   component = "internal"
   zone_name = var.zone_name
 }
