@@ -21,7 +21,7 @@ module "expense_acm_external" {
 
 }
 module "expense_internal" {
-  source = "../../../../modules/alb"
+  source = "../../../../modules/loadbalancer"
   common_tags = {
     "Terraform"   = "true"
     "Author"      = "sivaramakrishna"
@@ -44,7 +44,7 @@ module "expense_internal" {
 
 module "expense_external" {
   depends_on = [module.expense_acm_external]
-  source     = "../../../../modules/alb"
+  source     = "../../../../modules/loadbalancer"
   common_tags = {
     "Terraform"   = "true"
     "Author"      = "sivaramakrishna"
