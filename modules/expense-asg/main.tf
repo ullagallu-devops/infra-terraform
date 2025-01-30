@@ -8,6 +8,9 @@ resource "aws_launch_template" "test" {
   instance_type      = var.instance_type
   key_name           = var.key_name
   vpc_security_group_ids = var.vpc_security_group_ids
+  iam_instance_profile {
+    name = var.iam_role
+  }
 
   tag_specifications {
     resource_type = "instance"
@@ -99,20 +102,3 @@ resource "aws_lb_listener_rule" "https" {
   }
 }
 
-# Listner Reidirect Rule
-
-# resource "aws_lb_listener_rule" "redirect_http_to_https" {
-#   count = var.create_redirect_r_n ? 1 : 0
-
-#   listener_arn = var.http_listener_arn
-
-#   action {
-#     type = "redirect"
-
-#     redirect {
-#       port        = "443"
-#       protocol    = "HTTPS"
-#       status_code = "HTTP_301"
-#     }
-#   }
-# }

@@ -26,7 +26,7 @@ module "backend_asg"{
   desired_capacity = var.desired_capacity
   subnets = split(",",data.aws_ssm_parameter.private_subnet_ids.value)
   target_value = var.target_value
-
+  iam_role = data.aws_ssm_parameter.aws_cw.value
   listener_arn = data.aws_ssm_parameter.internal_http_listner.value
   component = "internal"
   zone_name = var.zone_name
@@ -46,6 +46,7 @@ module "frontend_asg"{
   ami_id = data.aws_ami.frontend.id
   instance_type = var.instance_type
   key_name = var.key_name
+  iam_role = data.aws_ssm_parameter.aws_cw.value
   vpc_security_group_ids = [data.aws_ssm_parameter.frontend.value]
   health_check_grace_period = var.health_check_grace_period
 
