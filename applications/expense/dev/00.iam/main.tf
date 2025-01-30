@@ -2,7 +2,7 @@ locals{
     name = "${var.environment}-${var.project_name}-${var.cw_name}"
 }
 resource "aws_iam_role" "test_role" {
-  name = "test-role"
+  name = local.name
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
