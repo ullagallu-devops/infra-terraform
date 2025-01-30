@@ -2,12 +2,13 @@
 
 # List of folders in the required order
 folders=(
+  "00.iam/"
   "01.vpc/"
   "02.sg/"
   "03.bastion-vpn/"
   "04.rds/"
-  "05.internal-external/"
-  "06.backend-frontend/"
+  # "05.internal-external/"
+  # "06.backend-frontend/"
 )
 
 # Start the overall timer
