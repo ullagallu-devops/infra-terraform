@@ -28,7 +28,7 @@ data "aws_ami" "backend" {
 
   filter {
     name   = "name"
-    values = ["backend-*"]
+    values = ["sivab-*"]
   }
   filter {
     name   = "architecture"
@@ -46,7 +46,7 @@ data "aws_ami" "frontend" {
 
   filter {
     name   = "name"
-    values = ["frontend-*"]
+    values = ["sivaf-*"]
   }
   filter {
     name   = "architecture"
