@@ -26,7 +26,7 @@ module "backend_asg"{
   desired_capacity = var.desired_capacity
   subnets = split(",",data.aws_ssm_parameter.private_subnet_ids.value)
   target_value = var.target_value
-  iam_role = data.aws_ssm_parameter.aws_cw.value
+  iam_role = data.aws_iam_role.example.name
   listener_arn = data.aws_ssm_parameter.internal_http_listner.value
   component = "internal"
   zone_name = var.zone_name
@@ -58,7 +58,7 @@ module "frontend_asg"{
   desired_capacity = var.desired_capacity
   subnets = split(",",data.aws_ssm_parameter.private_subnet_ids.value)
   target_value = var.target_value
-
+  iam_role = data.aws_iam_role.example.name
   listener_arn = data.aws_ssm_parameter.external_https_listner.value
   component = "external"
   zone_name = var.zone_name

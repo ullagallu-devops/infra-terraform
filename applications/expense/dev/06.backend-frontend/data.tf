@@ -1,5 +1,5 @@
-data "aws_ssm_parameter" "aws_cw" {
-  name  = "/${var.environment}/${var.project_name}/aws-cw-role"
+data "aws_iam_role" "example" {
+  name = "dev-expense-cw-iam"
 }
 data "aws_ssm_parameter" "internal_http_listner" {
   name  = "/${var.environment}/${var.project_name}/internal-http-listner"

@@ -1,8 +1,6 @@
 locals {
   name = "${var.environment}-${var.project_name}-${var.cw_name}"
 }
-
-# Define the IAM Role with the assume role policy
 resource "aws_iam_role" "test_role" {
   name = local.name
 
@@ -25,8 +23,6 @@ resource "aws_iam_role" "test_role" {
     var.common_tags
   )
 }
-
-# Define the IAM Policy for CloudWatch and Logs access
 resource "aws_iam_policy" "test_policy" {
   name        = local.name
   description = "Allow CloudWatch and Logs access"
@@ -62,7 +58,6 @@ resource "aws_iam_policy" "test_policy" {
   )
 }
 
-# Attach the IAM Policy to the Role
 resource "aws_iam_role_policy_attachment" "test_attachment" {
   role       = aws_iam_role.test_role.name
   policy_arn = aws_iam_policy.test_policy.arn
