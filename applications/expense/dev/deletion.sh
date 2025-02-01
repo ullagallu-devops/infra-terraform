@@ -8,6 +8,7 @@ folders=(
   "03.bastion-vpn/"
   "02.sg/"
   "01.vpc/"
+  "00.iam"
 )
 
 # Start the overall timer
