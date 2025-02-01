@@ -17,7 +17,6 @@ module "backend_asg"{
   key_name = var.key_name
   vpc_security_group_ids = [data.aws_ssm_parameter.backend.value]
   health_check_grace_period = var.health_check_grace_period
-
   port = 8080
   health_check_path = "/health"
   vpc_id = local.vpc_id
@@ -46,10 +45,9 @@ module "frontend_asg"{
   ami_id = data.aws_ami.frontend.id
   instance_type = var.instance_type
   key_name = var.key_name
-  iam_role = data.aws_ssm_parameter.aws_cw.value
+  iam_role = data.aws_iam_role.example.id
   vpc_security_group_ids = [data.aws_ssm_parameter.frontend.value]
   health_check_grace_period = var.health_check_grace_period
-
   port = 80
   health_check_path = "/health"
   vpc_id = local.vpc_id
@@ -58,7 +56,6 @@ module "frontend_asg"{
   desired_capacity = var.desired_capacity
   subnets = split(",",data.aws_ssm_parameter.private_subnet_ids.value)
   target_value = var.target_value
-  iam_role = data.aws_iam_role.example.id
   listener_arn = data.aws_ssm_parameter.external_https_listner.value
   component = "external"
   zone_name = var.zone_name
