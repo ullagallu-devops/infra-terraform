@@ -2,25 +2,25 @@ data "aws_iam_role" "example" {
   name = "dev-expense-cw-iam"
 }
 data "aws_ssm_parameter" "internal_http_listner" {
-  name  = "/${var.environment}/${var.project_name}/internal-http-listner"
+  name = "/${var.environment}/${var.project_name}/internal-http-listner"
 }
 data "aws_ssm_parameter" "external_http_listner" {
-  name  = "/${var.environment}/${var.project_name}/external-http-listner"
+  name = "/${var.environment}/${var.project_name}/external-http-listner"
 }
 data "aws_ssm_parameter" "external_https_listner" {
-  name  = "/${var.environment}/${var.project_name}/external-https-listner"
+  name = "/${var.environment}/${var.project_name}/external-https-listner"
 }
 data "aws_ssm_parameter" "private_subnet_ids" {
   name = "/${var.environment}/${var.project_name}/private_subnet_ids"
 }
 data "aws_ssm_parameter" "backend" {
-  name  = "/${var.environment}/${var.project_name}/backend-sg-id"
+  name = "/${var.environment}/${var.project_name}/backend-sg-id"
 }
 data "aws_ssm_parameter" "frontend" {
-  name  = "/${var.environment}/${var.project_name}/frontend-sg-id"
+  name = "/${var.environment}/${var.project_name}/frontend-sg-id"
 }
 data "aws_ssm_parameter" "vpc_id" {
-  name  = "/${var.environment}/${var.project_name}/vpc_id"
+  name = "/${var.environment}/${var.project_name}/vpc_id"
 }
 data "aws_ami" "backend" {
   most_recent = true

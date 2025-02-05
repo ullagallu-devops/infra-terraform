@@ -1,82 +1,57 @@
 module "bastion" {
-  source         = "../../../modules/sg"
+  depends_on     = [module.vpc_module]
+  source         = "../../modules/sg"
   project_name   = var.project_name
   environment    = var.environment
-  name = "bastion"
-  vpc_id         = data.aws_ssm_parameter.vpc_id.value
-  sg_description = "This SG was used for Bastion"
-  common_tags = {
-    "Terraform" = true
-    "Developer" = "Sivaramakrishna"
-  }
-  sg_tags = {
-    "Component" = "Bastion"
-  }
+  sg_name        = var.bastion_sg_name
+  vpc_id         = module.vpc_module.vpc_id
+  sg_description = var.bastion_sg_description
+  common_tags    = var.bastion_common_tags
 }
 module "vpn" {
-  source         = "../../../modules/sg"
+  depends_on     = [module.vpc_module]
+  source         = "../../modules/sg"
   project_name   = var.project_name
   environment    = var.environment
-  name = "vpn"
-  vpc_id         = data.aws_ssm_parameter.vpc_id.value
-  sg_description = "This SG was used for VPN"
-  common_tags = {
-    "Terraform" = true
-    "Developer" = "Sivaramakrishna"
-  }
-  sg_tags = {
-    "Component" = "VPN"
-  }
+  sg_name        = var.vpn_sg_name
+  vpc_id         = module.vpc_module.vpc_id
+  sg_description = var.vpn_sg_description
+  common_tags    = var.vpn_common_tags
 }
 module "backend" {
-  source         = "../../../modules/sg"
+  depends_on     = [module.vpc_module]
+  source         = "../../modules/sg"
   project_name   = var.project_name
   environment    = var.environment
-  name = "backend"
-  vpc_id         = data.aws_ssm_parameter.vpc_id.value
-  sg_description = "This SG was used for backend container"
-  common_tags = {
-    "Terraform" = true
-    "Developer" = "Sivaramakrishna"
-  }
-  sg_tags = {
-    "Component" = "Backend"
-  }
+  sg_name        = var.backend_sg_name
+  vpc_id         = module.vpc_module.vpc_id
+  sg_description = var.backend_sg_description
+  common_tags    = var.backend_common_tags
 }
 
 module "db" {
-  source         = "../../../modules/sg"
+  depends_on     = [module.vpc_module]
+  source         = "../../modules/sg"
   project_name   = var.project_name
   environment    = var.environment
-  name="db"
-  vpc_id         = data.aws_ssm_parameter.vpc_id.value
-  sg_description = "This SG was used for RDS MySQL"
-  common_tags = {
-    "Terraform" = true
-    "Developer" = "Sivaramakrishna"
-  }
-  sg_tags = {
-    "Component" = "RDS-MYSQL"
-  }
+  sg_name        = var.db_sg_name
+  vpc_id         = module.vpc_module.vpc_id
+  sg_description = var.db_sg_description
+  common_tags    = var.db_common_tags
 }
 
 module "alb" {
-  source         = "../../../modules/sg"
+  depends_on     = [module.vpc_module]
+  source         = "../../modules/sg"
   project_name   = var.project_name
   environment    = var.environment
-  name = "alb"
-  vpc_id         = data.aws_ssm_parameter.vpc_id.value
-  sg_description = "This SG was used for ALB"
-  common_tags = {
-    "Terraform" = true
-    "Developer" = "Sivaramakrishna"
-  }
-  sg_tags = {
-    "Component" = "ALB"
-  }
+  sg_name        = var.alb_sg_name
+  vpc_id         = module.vpc_module.vpc_id
+  sg_description = var.alb_sg_description
+  common_tags    = var.alb_common_tags
 }
 
-
+# DB Rules
 resource "aws_security_group_rule" "vpn_db" {
   description              = "This rule allows traffic from vpn on port 3306"
   type                     = "ingress"
@@ -107,6 +82,7 @@ resource "aws_security_group_rule" "backend_db" {
   security_group_id        = module.db.sg_id
 }
 
+# Backend Rules
 resource "aws_security_group_rule" "alb_backend" {
   description              = "This rule allows traffic from ALB on port 8080"
   type                     = "ingress"
@@ -137,9 +113,7 @@ resource "aws_security_group_rule" "vpn_backend" {
   security_group_id        = module.backend.sg_id
 }
 
-
-
-
+# Bastion Rules
 resource "aws_security_group_rule" "bastion_ssh" {
   description       = "This rule allows all traffic from internet on 22"
   type              = "ingress"
@@ -150,7 +124,7 @@ resource "aws_security_group_rule" "bastion_ssh" {
   security_group_id = module.bastion.sg_id
 }
 
-# VPN
+# VPN Rules
 resource "aws_security_group_rule" "vpn_ssh" {
   description       = "This rule allows all traffic from internet on 22"
   type              = "ingress"
@@ -189,7 +163,7 @@ resource "aws_security_group_rule" "vpn_udp" {
   security_group_id = module.vpn.sg_id
 }
 
-
+# ALB Rules
 resource "aws_security_group_rule" "vpn_alb" {
   description              = "This rule allows traffic from vpn on port 80"
   type                     = "ingress"
@@ -210,8 +184,8 @@ resource "aws_security_group_rule" "bastion_alb" {
   security_group_id        = module.alb.sg_id
 }
 
-resource "aws_security_group_rule" "vpn_http_backend" {
-  description       = "This rule allows traffic from cloud front on port 80"
+resource "aws_security_group_rule" "http_internet" {
+  description       = "Allow http from anywhere"
   type              = "ingress"
   from_port         = 80
   to_port           = 80
@@ -220,8 +194,8 @@ resource "aws_security_group_rule" "vpn_http_backend" {
   security_group_id = module.alb.sg_id
 }
 
-resource "aws_security_group_rule" "vpn_https_backend" {
-  description       = "Allow traffic from CloudFront on port 443"
+resource "aws_security_group_rule" "https_internet" {
+  description       = "Allow https from anywhere"
   type              = "ingress"
   from_port         = 443
   to_port           = 443

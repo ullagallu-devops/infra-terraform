@@ -49,7 +49,7 @@ resource "aws_iam_policy" "test_policy" {
       }
     ]
   })
-  
+
   tags = merge(
     {
       Name = local.name

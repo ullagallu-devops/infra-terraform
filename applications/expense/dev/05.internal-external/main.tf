@@ -33,7 +33,7 @@ module "expense_internal" {
   internal_external          = true
   lb_type                    = "application"
   alb_security_group         = [data.aws_ssm_parameter.internal_lb_sg.value]
-  alb_subnets                = split(",",data.aws_ssm_parameter.private_subnet_ids.value)
+  alb_subnets                = split(",", data.aws_ssm_parameter.private_subnet_ids.value)
   enable_deletion_protection = false
   create_http_listener       = true
   create_https_listener      = false
@@ -56,7 +56,7 @@ module "expense_external" {
   internal_external          = false
   lb_type                    = "application"
   alb_security_group         = [data.aws_ssm_parameter.external_lb_sg.value]
-  alb_subnets                = split(",",data.aws_ssm_parameter.public_subnet_ids.value)
+  alb_subnets                = split(",", data.aws_ssm_parameter.public_subnet_ids.value)
   enable_deletion_protection = false
   create_http_listener       = true
   create_https_listener      = true
