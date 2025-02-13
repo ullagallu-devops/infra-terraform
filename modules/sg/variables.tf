@@ -33,12 +33,6 @@ variable "sg_name" {
   default = ""
 }
 
-variable "sg_tags" {
-  description = "Tags for the security group."
-  type        = map(string)
-  default     = {}
-}
-
 variable "ingress_rules" {
   description = "Inbound traffic rules for the security group."
   type        = list(object({
