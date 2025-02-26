@@ -1,0 +1,20 @@
+name: Terraform EKS Cluster Deletion
+
+on:
+  workflow_dispatch:
+
+jobs:
+  terraform:
+    runs-on: self-hosted
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Terraform Init (EKS)
+      working-directory: ./eks-my-practice
+      run: terraform init
+
+    - name: Terraform Destroy (EKS)
+      working-directory: ./eks-my-practice
+      run: terraform destroy -auto-approve

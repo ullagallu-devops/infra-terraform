@@ -37,7 +37,6 @@ resource "aws_eks_addon" "addons" {
   resolve_conflicts_on_create = "OVERWRITE"
 }
 
-
 ### EKS NodeGroup
 resource "aws_eks_node_group" "nodes" {
   for_each = var.node_groups

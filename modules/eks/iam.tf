@@ -12,17 +12,14 @@ resource "aws_iam_role" "cluster" {
     }]
   })
 }
-resource "aws_iam_role_policy_attachment" "cloudwatch_logs" {
-  policy_arn = "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess"
-  role       = aws_iam_role.cluster.name
-}
-resource "aws_iam_role_policy_attachment" "AmazonEKSClusterPolicy" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
-  role       = aws_iam_role.cluster.name
-}
-resource "aws_iam_role_policy_attachment" "AmazonEKSVPCResourceController" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSVPCResourceController"
-  role = aws_iam_role.cluster.name
+resource "aws_iam_role_policy_attachment" "control_plane_policy"{
+   for_each = toset([
+      "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess",
+      "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy",
+      "arn:aws:iam::aws:policy/AmazonEKSVPCResourceController"
+   ])
+   policy_arn = each.value
+   role = aws_iam_role.cluster.name
 }
 
 # # Node Group IAM Role
