@@ -11,4 +11,5 @@ module "eks"{
     Terraform = true
     Developer = "siva"
     }
+    vpc_id = module.eks_vpc.vpc_id
 }
