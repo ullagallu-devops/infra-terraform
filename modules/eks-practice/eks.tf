@@ -108,5 +108,10 @@ resource "aws_eks_node_group" "example" {
     version = "$Latest"
   }
 
+  tags = {
+    "Name"        = "${local.name}-${each.key}"
+    # "kubernetes.io/cluster/${aws_eks_cluster.example.name}" = "owned"
+  }
+
   depends_on = [aws_iam_role_policy_attachment.example-AmazonEKSWorkerNodePolicy]
 }
