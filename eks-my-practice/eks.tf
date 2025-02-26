@@ -16,7 +16,7 @@ module "eks"{
     addons = {
         coredns = "v1.11.4-eksbuild.2"
         vpc-cni = "v1.19.3-eksbuild.1"
-        kube-proxy = "v1.32.0-eksbuild.2"
+        kube-proxy = "v1.30.5-eksbuild.2"
         eks-pod-identity-agent = "v1.3.5-eksbuild.2"
     }
 
