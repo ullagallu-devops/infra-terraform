@@ -149,3 +149,7 @@ alb_common_tags = {
     Terraform = "true"
     Developer = "Siva"
 }
+
+# ECS variable values
+role_name = "ecs_task_execution_role"
+enable_service_role = false

@@ -64,3 +64,7 @@ variable "frontend_common_tags" {}
 variable "alb_sg_name" {}
 variable "alb_sg_description" {}
 variable "alb_common_tags" {}
+
+# Iam variables
+variable "role_name" {}
+variable "enable_service_role" {}
