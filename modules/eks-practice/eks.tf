@@ -19,7 +19,6 @@ resource "aws_eks_cluster" "example" {
     endpoint_public_access  = var.endpoint_public_access
     security_group_ids  = [aws_security_group.cluster.id]
     public_access_cidrs = var.public_access_cidrs
-    vpc_id = var.vpc_id
   }
   depends_on = [
     aws_iam_role_policy_attachment.cluster_AmazonEKSClusterPolicy,
