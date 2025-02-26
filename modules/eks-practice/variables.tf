@@ -10,6 +10,5 @@ variable "vpc_id"{}
 variable "node_groups"{}
 
 variable "addons"{}
-
 variable "eks-iam-access"{}
 
