@@ -1,4 +1,4 @@
-variable "environemnt"{}
+variable "environment"{}
 variable "project_name"{}
 variable "subnets"{}
 variable "endpoint_private_access"{}
