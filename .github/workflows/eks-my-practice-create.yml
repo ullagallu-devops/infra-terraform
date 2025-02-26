@@ -1,4 +1,4 @@
-name: Terraform EKS Cluster Creation
+name: EKS-MY-PRACTICE CREATION
 
 on:
   push:

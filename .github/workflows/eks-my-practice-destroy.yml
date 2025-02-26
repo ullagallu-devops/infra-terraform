@@ -1,4 +1,4 @@
-name: Terraform EKS Cluster Deletion
+name: EKS-MY-PRACTICE DESTROY
 
 on:
   workflow_dispatch:
