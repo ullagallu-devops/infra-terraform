@@ -12,4 +12,5 @@ module "eks"{
     Developer = "siva"
     }
     vpc_id = module.eks_vpc.vpc_id
+    
 }
