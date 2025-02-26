@@ -62,7 +62,7 @@ resource "aws_eks_addon" "example" {
   cluster_name                = aws_eks_cluster.example.name
   addon_name                  = each.key
   addon_version               = each.value
-  resolve_conflicts_on_update = "OVERWRITE"
+  resolve_conflicts_on_create = "OVERWRITE"
   lifecycle {
     ignore_changes = [addon_name]
   }
