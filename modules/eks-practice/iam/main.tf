@@ -14,13 +14,7 @@ resource "aws_eks_access_policy_association" "example" {
   access_scope {
     type = var.access_scope_type
 
-    # Only include namespaces if type is "namespace"
-    dynamic "namespace" {
-      for_each = var.access_scope_type == "namespace" ? [1] : []
-      content {
-        namespaces = var.namespaces
-      }
-    }
+     namespaces = var.access_scope_type == "namespace" ? var.namespaces : null
   }
 }
 
