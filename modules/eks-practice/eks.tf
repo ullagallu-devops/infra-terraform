@@ -80,9 +80,14 @@ resource "aws_launch_template" "main" {
     }
   }
 
-  tags = {
-    Name = each.key
-  }
+  tag_specifications = [
+    {
+      resource_type = "instance"  
+      tags = {
+        Name = each.key
+      }
+    }
+  ]
 }
 
 resource "aws_eks_node_group" "example" {
