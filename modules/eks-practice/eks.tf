@@ -59,13 +59,13 @@ resource "aws_security_group" "cluster" {
 }
 
 # Add-ons
-resource "aws_eks_addon" "example" {
-  for_each = var.addons
-  cluster_name                = aws_eks_cluster.example.name
-  addon_name                  = each.key
-  addon_version               = each.value
-  resolve_conflicts_on_create = "OVERWRITE"
-}
+# resource "aws_eks_addon" "example" {
+#   for_each = var.addons
+#   cluster_name                = aws_eks_cluster.example.name
+#   addon_name                  = each.key
+#   addon_version               = each.value
+#   resolve_conflicts_on_create = "OVERWRITE"
+# }
 
 # nodeGroup
 resource "aws_launch_template" "main" {
@@ -105,9 +105,5 @@ resource "aws_eks_node_group" "example" {
     version = "$Latest"
   }
 
-  depends_on = [
-    aws_iam_role_policy_attachment.example-AmazonEKSWorkerNodePolicy,
-    aws_iam_role_policy_attachment.example-AmazonEKS_CNI_Policy,
-    aws_iam_role_policy_attachment.example-AmazonEC2ContainerRegistryReadOnly,
-  ]
+  depends_on = [aws_iam_role_policy_attachment.example-AmazonEKSWorkerNodePolicy]
 }
