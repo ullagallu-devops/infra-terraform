@@ -28,7 +28,7 @@ resource "aws_eks_access_policy_association" "example" {
 # Variables
 variable "cluster_name"{}
 variable "principal_arn"{}
-Variable "k8s_groups"{}
+variable "k8s_groups"{}
 variable "policy_arn"{}
 variable "access_scope_type"{}
 variable "namespaces"{
