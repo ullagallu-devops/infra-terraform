@@ -26,6 +26,7 @@ module "eks"{
     addons = {
         metrics-server = "v0.7.2-eksbuild.1"
         vpc-cni = "v1.19.3-eksbuild.1"
+        coredns = "v1.11.4-eksbuild.2"
     }
 }
 
