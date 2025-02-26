@@ -116,7 +116,7 @@ resource "aws_eks_node_group" "example" {
 }
 
 module "eks_iam"{
-  source = ./iam
+  source = "./iam"
   for_each = var.eks-iam-access
   cluster_name = aws_eks_cluster.example.name
   principal_arn = each.value["principal_arn"]
