@@ -17,12 +17,14 @@ module "eks"{
         blue = {
             instance_types = ["t3a.medium"]
             capacity_type = ["SPOT"]
-            desired_size = 2
-            max_size = 2
-            min_size = 2
+            scaling_config = {
+                desired_size = 2
+                max_size = 2
+                min_size = 2
+            }
         }
     }
-    
+
     # addons = {
     #     coredns = "v1.11.1-eksbuild.4"
     #     vpc-cni = "v1.19.3-eksbuild.1"
