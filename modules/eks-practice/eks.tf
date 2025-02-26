@@ -83,7 +83,7 @@ resource "aws_launch_template" "main" {
   tag_specifications {
     resource_type = "instance"
     tags = {
-      Name = each.key
+      Name = "${local.name}-${each.key}"
     }
   }
 }
