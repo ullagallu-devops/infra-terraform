@@ -16,19 +16,27 @@ module "eks"{
     node_groups = {
         blue = {
             instance_types = ["t3a.medium"]
-            capacity_type = ["SPOT"]
-            scaling_config = {
-                desired_size = 2
-                max_size = 2
-                min_size = 2
-            }
+            capacity_type = "SPOT"
+            desired_size = 2
+            max_size = 2
+            min_size = 2
         }
     }
+}
 
-    # addons = {
+
+
+
+
+
+
+
+
+
+
+# addons = {
     #     coredns = "v1.11.1-eksbuild.4"
     #     vpc-cni = "v1.19.3-eksbuild.1"
     #     kube-proxy = "v1.30.5-eksbuild.2"
     #     eks-pod-identity-agent = "v1.3.5-eksbuild.2"
     # }
-}
