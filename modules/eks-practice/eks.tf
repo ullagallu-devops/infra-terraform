@@ -110,8 +110,17 @@ resource "aws_eks_node_group" "example" {
 
   tags = {
     "Name"        = "${local.name}-${each.key}"
-    # "kubernetes.io/cluster/${aws_eks_cluster.example.name}" = "owned"
   }
 
   depends_on = [aws_iam_role_policy_attachment.example-AmazonEKSWorkerNodePolicy]
+}
+
+module "eks_iam"{
+  source = ./iam
+  for_each = var.eks-iam-access
+  cluster_name = aws_eks_cluster.example.name
+  principal_arn = each.value["principal_arn"]
+  k8s_groups = each.value["k8s_groups"]
+  policy_arn = each.value["policy_arn"]
+  access_scope_type = each.value["access_scope_type"]
 }

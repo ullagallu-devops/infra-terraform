@@ -11,3 +11,5 @@ variable "node_groups"{}
 
 variable "addons"{}
 
+Variable "eks-iam-access"{}
+

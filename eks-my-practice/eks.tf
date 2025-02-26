@@ -30,6 +30,15 @@ module "eks"{
         kube-proxy = "v1.31.3-eksbuild.2"
         eks-pod-identity-agent = "v1.3.5-eksbuild.2"
     }
+
+    eks-iam-access = {
+        workstation = {
+            principal_arn = "arn:aws:iam::522814728660:user/eks-siva.bapatlas.site"
+            policy_arn = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
+            k8s_groups = []
+            access_scope_type = "cluster"
+        }
+    }
 }
 
 
