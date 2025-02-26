@@ -63,7 +63,4 @@ resource "aws_eks_addon" "example" {
   addon_name                  = each.key
   addon_version               = each.value
   resolve_conflicts_on_create = "OVERWRITE"
-  lifecycle {
-    ignore_changes = [addon_name]
-  }
 }
