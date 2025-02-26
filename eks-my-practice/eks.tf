@@ -18,7 +18,6 @@ module "eks"{
         vpc-cni = "v1.19.3-eksbuild.1"
         kube-proxy = "v1.32.0-eksbuild.2"
         eks-pod-identity-agent = "v1.3.5-eksbuild.2"
-        aws-ebs-csi-driver = "v1.39.0-eksbuild.1"
     }
 
 }
