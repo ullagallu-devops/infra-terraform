@@ -32,15 +32,18 @@ module "eks"{
     }
 }
 
-# module "addons" {
-#     depends_on = [module.eks]
-#     source = "../modules/eks-addons"
-#     metrics-server = "v0.7.2-eksbuild.1"
-#     vpc-cni = "v1.19.3-eksbuild.1"
-#     coredns = "v1.11.4-eksbuild.2"
-#     kube-proxy = "v1.31.3-eksbuild.2"
-#     eks-pod-identity-agent = "v1.3.5-eksbuild.2"
-# }
+module "addons" {
+    depends_on = [module.eks]
+    source = "../modules/eks-addons"
+    cluster_name = module.eks.cluster_name
+    addons = {
+        metrics-server = "v0.7.2-eksbuild.1"
+        vpc-cni = "v1.19.3-eksbuild.1"
+        coredns = "v1.11.4-eksbuild.2"
+        kube-proxy = "v1.31.3-eksbuild.2"
+        eks-pod-identity-agent = "v1.3.5-eksbuild.2"
+    }
+}
 
 
 
