@@ -3,9 +3,7 @@ resource "null_resource" "kube-bootstrap" {
   
   provisioner "local-exec" {
     command = <<EOF
-    aws eks update-kubeconfig \
-      --region ${var.region} \
-      --name ${module.eks.cluster_name}
+    aws eks update-kubeconfig --region ${var.region} --name ${module.eks.cluster_name}
 EOF
   }
 }
