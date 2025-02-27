@@ -1,9 +1,6 @@
 name: Terraform EKS Cluster Creation
 
 on:
-#   push:
-#     branches:
-#       - main
     workflow_dispatch:
 jobs:
   terraform:
