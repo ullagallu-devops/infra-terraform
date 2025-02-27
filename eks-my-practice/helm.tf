@@ -3,7 +3,7 @@ resource "null_resource" "kube-bootstrap" {
 
   provisioner "local-exec" {
     command = <<EOF
-aws eks update-kubeconfig --name ${module.eks.cluster_name}
+aws eks update-kubeconfig --name "$(echo ${module.eks.cluster_name} | tr -d '[:space:]')"
 EOF
     interpreter = ["/bin/bash", "-c"]
   }
