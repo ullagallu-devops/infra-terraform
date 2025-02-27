@@ -22,15 +22,6 @@ module "eks"{
             min_size = 6
         }
     }
-
-    addons = {
-        metrics-server = "v0.7.2-eksbuild.1"
-        vpc-cni = "v1.19.3-eksbuild.1"
-        coredns = "v1.11.4-eksbuild.2"
-        kube-proxy = "v1.31.3-eksbuild.2"
-        eks-pod-identity-agent = "v1.3.5-eksbuild.2"
-    }
-
     eks-iam-access = {
         workstation = {
             principal_arn = "arn:aws:iam::522814728660:user/eks-siva.bapatlas.site"
@@ -40,6 +31,16 @@ module "eks"{
         }
     }
 }
+
+# module "addons" {
+#     depends_on = [module.eks]
+#     source = "../modules/eks-addons"
+#     metrics-server = "v0.7.2-eksbuild.1"
+#     vpc-cni = "v1.19.3-eksbuild.1"
+#     coredns = "v1.11.4-eksbuild.2"
+#     kube-proxy = "v1.31.3-eksbuild.2"
+#     eks-pod-identity-agent = "v1.3.5-eksbuild.2"
+# }
 
 
 

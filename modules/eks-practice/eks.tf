@@ -58,15 +58,6 @@ resource "aws_security_group" "cluster" {
   }
 }
 
-# Add-ons
-resource "aws_eks_addon" "example" {
-  for_each = var.addons
-  cluster_name                = aws_eks_cluster.example.name
-  addon_name                  = each.key
-  addon_version               = each.value
-  resolve_conflicts_on_create = "OVERWRITE"
-}
-
 # nodeGroup
 resource "aws_launch_template" "main" {
   for_each = var.node_groups

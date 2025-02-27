@@ -13,3 +13,7 @@ output "db_subnet_ids"{
 output "db_subnet_group"{
     value = module.eks_vpc.db_subnet_group
 }
+
+output "cluster_name"{
+    value = module.eks.cluster_name
+}
