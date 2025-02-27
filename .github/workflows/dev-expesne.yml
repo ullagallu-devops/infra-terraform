@@ -1,7 +1,0 @@
-name: Expense infra dev
-on:
-    workflow_dispatch:
-jobs:
-    terraform:
-        runs-on: ubuntu-latest
-    
