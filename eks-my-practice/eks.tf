@@ -32,7 +32,7 @@ module "eks"{
     }
 }
 
-module "addons" {
+module "eks_addons" {
     depends_on = [module.eks]
     source = "../modules/eks-addons"
     cluster_name = module.eks.cluster_name
