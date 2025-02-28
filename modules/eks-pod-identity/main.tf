@@ -1,5 +1,5 @@
 resource "aws_iam_role" "this" {
-  name = "${var.env}-eks-${var.name}-pod"
+  name = "${var.env}-eks-${var.irsa_role_name}-pod"
 
   assume_role_policy = jsonencode({
     "Version" : "2012-10-17",
@@ -16,15 +16,23 @@ resource "aws_iam_role" "this" {
       }
     ]
   })
+}
 
-  inline_policy {
-    name = "${var.name}-policy"
+# Attach an inline policy only if policy_statements is provided
+resource "aws_iam_policy" "inline" {
+  count = length(var.policy_statements) > 0 ? 1 : 0
 
-    policy = jsonencode({
-      "Version" : "2012-10-17",
-      "Statement" : var.policy_statements
-    })
-  }
+  name   = "${var.name}-inline-policy"
+  policy = jsonencode({
+    "Version" : "2012-10-17",
+    "Statement" : var.policy_statements
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "managed" {
+  count      = length(var.managed_policy_arns)
+  role       = aws_iam_role.this.name
+  policy_arn = var.managed_policy_arns[count.index]
 }
 
 resource "aws_eks_pod_identity_association" "this" {
@@ -33,3 +41,4 @@ resource "aws_eks_pod_identity_association" "this" {
   service_account = var.service_account
   role_arn        = aws_iam_role.this.arn
 }
+

@@ -3,7 +3,7 @@ variable "env" {
   type        = string
 }
 
-variable "name" {
+variable "irsa_role_name" {
   description = "Name of the IAM role and policy"
   type        = string
 }
@@ -31,4 +31,12 @@ variable "service_account" {
   description = "Service account name"
   type        = string
 }
+
+variable "managed_policy_arns" {
+  description = "List of managed policy ARNs to attach to the role"
+  type        = list(string)
+  default     = []
+}
+
+
 
