@@ -47,7 +47,7 @@ module "eks_addons" {
 
 module "ebs_pod_identity" {
     depends_on = [module.eks]
-    source = ../modules/eks-ebs_pod_identity
+    source = "../modules/eks-ebs_pod_identity"
 
     env = var.env
     irsa_role_name = "ebs-pod-identity"
