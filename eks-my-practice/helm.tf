@@ -1,6 +1,8 @@
 resource "null_resource" "kube-bootstrap" {
   depends_on = [module.eks]
-
+  triggers = {
+    always_run = timestamp()
+  }
   provisioner "local-exec" {
     command = "aws eks update-kubeconfig --region ap-south-1 --name ${module.eks.cluster_name}"
   }
