@@ -4,12 +4,7 @@ resource "null_resource" "kube-bootstrap" {
   provisioner "local-exec" {
     command = <<EOF
       aws eks update-kubeconfig --name ${module.eks.cluster_name} 
-      kubectl get nodes
     EOF
-  }
-
-  triggers = {
-    cluster_name = module.eks.cluster_name
   }
 }
 
