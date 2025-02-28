@@ -51,14 +51,46 @@ module "eks_addons" {
     }
 }
 
-# module "ebs_pod_identity" {
-#     depends_on = [module.eks]
-#     source = "../modules/eks-pod-identity"
+module "ebs_pod_identity" {
+    depends_on = [module.eks]
+    source = "../modules/eks-pod-identity"
 
-#     environment = var.environment
-#     irsa_role_name = "ebs-pod-identity"
-#     managed_policy_arns = ["arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"]
-#     cluster_name = module.eks.cluster_name
-#     namespace = "kube-system"
-#     service_account = "ebs-csi-controller-sa"
-# }
+    environment = var.environment
+    irsa_role_name = "ebs-pod-identity"
+    managed_policy_arns = ["arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"]
+    cluster_name = module.eks.cluster_name
+    namespace = "kube-system"
+    service_account = "ebs-csi-controller-sa"
+}
+
+resource "kubernetes_storage_class" "ebs" {
+  depends_on = [module.eks]
+  metadata {
+    name = "ebs-sc"
+  }
+
+  storage_provisioner = "ebs.csi.aws.com"
+
+  parameters = {
+    type = "gp3"
+  }
+
+  reclaim_policy = "Delete"
+  volume_binding_mode = "WaitForFirstConsumer"
+}
+
+resource "kubernetes_annotations" "ebs_csi_annotation" {
+  depends_on = [helm_release.ebs_csi_driver,kubernetes_storage_class.ebs]
+
+  api_version = "v1"
+  kind        = "ServiceAccount"
+
+  metadata {
+    name      = "ebs-csi-controller-sa"
+    namespace = "kube-system"
+  }
+
+  annotations = {
+    "eks.amazonaws.com/role-arn" = module.ebs_pod_identity.arn
+  }
+}
