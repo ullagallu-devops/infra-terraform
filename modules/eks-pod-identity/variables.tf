@@ -15,6 +15,7 @@ variable "policy_statements" {
     Action   = list(string)
     Resource = list(string)
   }))
+  default = []
 }
 
 variable "cluster_name" {
