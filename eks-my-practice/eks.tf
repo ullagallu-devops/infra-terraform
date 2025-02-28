@@ -64,7 +64,7 @@ module "ebs_pod_identity" {
 }
 
 resource "kubernetes_storage_class" "ebs" {
-  depends_on = [module.eks]
+  depends_on = [module.eks,null_resource.kube-bootstrap]
   metadata {
     name = "ebs-sc"
   }
@@ -80,7 +80,7 @@ resource "kubernetes_storage_class" "ebs" {
 }
 
 resource "kubernetes_annotations" "ebs_csi_annotation" {
-  depends_on = [helm_release.ebs_csi_driver,kubernetes_storage_class.ebs]
+  depends_on = [helm_release.ebs_csi_driver,kubernetes_storage_class.ebs,null_resource.kube-bootstrap]
 
   api_version = "v1"
   kind        = "ServiceAccount"
