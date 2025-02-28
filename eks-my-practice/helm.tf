@@ -1,8 +1,13 @@
 resource "null_resource" "kube-bootstrap" {
   depends_on = [module.eks]
-   provisioner "local-exec" {
-    command = "aws eks update-kubeconfig --name ${module.eks.cluster_name}"
+
+  provisioner "local-exec" {
+    command = <<EOF
+      aws eks update-kubeconfig --name ${module.eks.cluster_name} 
+      export KUBECONFIG=~/.kube/config
+    EOF
   }
+
   triggers = {
     cluster_name = module.eks.cluster_name
   }
@@ -21,4 +26,3 @@ resource "helm_release" "ebs_csi_driver" {
     value = "true"
   }
 }
-
