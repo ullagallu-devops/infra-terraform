@@ -22,7 +22,8 @@ resource "aws_iam_role_policy_attachment" "cluster_AmazonEKSClusterPolicy" {
   for_each = toset([
     "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess",
     "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy",
-    "arn:aws:iam::aws:policy/AmazonEKSVPCResourceController"
+    "arn:aws:iam::aws:policy/AmazonEKSVPCResourceController",
+    "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"
   ])
   policy_arn = each.value
   role       = aws_iam_role.cluster.name

@@ -58,26 +58,26 @@ resource "aws_security_group" "cluster" {
   }
 }
 
-# nodeGroup
-# resource "aws_launch_template" "main" {
-#   for_each = var.node_groups
-#   name     = each.key
+nodeGroup
+resource "aws_launch_template" "main" {
+  for_each = var.node_groups
+  name     = each.key
 
-#   block_device_mappings {
-#     device_name = "/dev/xvda"
-#     ebs {
-#       volume_size = 30
-#       encrypted   = true
-#     }
-#   }
+  block_device_mappings {
+    device_name = "/dev/xvda"
+    ebs {
+      volume_size = 30
+      encrypted   = true
+    }
+  }
 
-#   tag_specifications {
-#     resource_type = "instance"
-#     tags = {
-#       Name = "${local.name}-${each.key}"
-#     }
-#   }
-# }
+  tag_specifications {
+    resource_type = "instance"
+    tags = {
+      Name = "${local.name}-${each.key}"
+    }
+  }
+}
 
 resource "aws_eks_node_group" "example" {
   for_each = var.node_groups
@@ -94,10 +94,10 @@ resource "aws_eks_node_group" "example" {
     min_size     = each.value["min_size"]
   }
 
-  # launch_template {
-  #   name    = each.key
-  #   version = "$Latest"
-  # }
+  launch_template {
+    name    = each.key
+    version = "$Latest"
+  }
 
   tags = {
     "Name"        = "${local.name}-${each.key}"
