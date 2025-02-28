@@ -58,7 +58,7 @@ resource "aws_security_group" "cluster" {
   }
 }
 
-nodeGroup
+# nodeGroup
 resource "aws_launch_template" "main" {
   for_each = var.node_groups
   name     = each.key
