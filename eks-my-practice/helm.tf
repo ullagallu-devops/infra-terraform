@@ -1,3 +1,14 @@
+resource "null_resource" "kube-bootstrap" {
+  depends_on = [module.eks]
+
+  provisioner "local-exec" {
+    command = <<EOF
+aws eks update-kubeconfig --name ${aws_eks_cluster.example.name}
+kubectl create ns siva
+echo "Cluster setup completed"
+EOF
+  }
+}
 # resource "helm_release" "ebs_csi_driver" {
 #   depends_on = [null_resource.kube-bootstrap]
 #   name       = "aws-ebs-csi-driver"
