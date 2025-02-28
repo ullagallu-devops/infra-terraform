@@ -14,9 +14,4 @@ resource "helm_release" "ebs_csi_driver" {
   chart      = "aws-ebs-csi-driver"
   namespace  = "kube-system"
   create_namespace = false
-
-  set {
-    name  = "serviceAccount.create"
-    value = "true"
-  }
 }
