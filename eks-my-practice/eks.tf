@@ -63,34 +63,34 @@ module "ebs_pod_identity" {
     service_account = "ebs-csi-controller-sa"
 }
 
-resource "kubernetes_storage_class" "ebs" {
-  depends_on = [module.eks,null_resource.kube-bootstrap]
-  metadata {
-    name = "ebs-sc"
-  }
+# resource "kubernetes_storage_class" "ebs" {
+#   depends_on = [module.eks,null_resource.kube-bootstrap]
+#   metadata {
+#     name = "ebs-sc"
+#   }
 
-  storage_provisioner = "ebs.csi.aws.com"
+#   storage_provisioner = "ebs.csi.aws.com"
 
-  parameters = {
-    type = "gp3"
-  }
+#   parameters = {
+#     type = "gp3"
+#   }
 
-  reclaim_policy = "Delete"
-  volume_binding_mode = "WaitForFirstConsumer"
-}
+#   reclaim_policy = "Delete"
+#   volume_binding_mode = "WaitForFirstConsumer"
+# }
 
-resource "kubernetes_annotations" "ebs_csi_annotation" {
-  depends_on = [helm_release.ebs_csi_driver,kubernetes_storage_class.ebs,null_resource.kube-bootstrap]
+# resource "kubernetes_annotations" "ebs_csi_annotation" {
+#   depends_on = [helm_release.ebs_csi_driver,kubernetes_storage_class.ebs,null_resource.kube-bootstrap]
 
-  api_version = "v1"
-  kind        = "ServiceAccount"
+#   api_version = "v1"
+#   kind        = "ServiceAccount"
 
-  metadata {
-    name      = "ebs-csi-controller-sa"
-    namespace = "kube-system"
-  }
+#   metadata {
+#     name      = "ebs-csi-controller-sa"
+#     namespace = "kube-system"
+#   }
 
-  annotations = {
-    "eks.amazonaws.com/role-arn" = module.ebs_pod_identity.arn
-  }
-}
+#   annotations = {
+#     "eks.amazonaws.com/role-arn" = module.ebs_pod_identity.arn
+#   }
+# }
