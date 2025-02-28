@@ -49,7 +49,7 @@ module "ebs_pod_identity" {
     depends_on = [module.eks]
     source = "../modules/eks-pod-identity"
 
-    env = var.env
+    environment = var.environment
     irsa_role_name = "ebs-pod-identity"
     managed_policy_arns = ["arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"]
     cluster_name = module.eks.cluster_name
