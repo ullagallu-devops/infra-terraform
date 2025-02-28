@@ -17,9 +17,9 @@ module "eks"{
         blue = {
             instance_types = ["t3a.medium"]
             capacity_type = "SPOT"
-            desired_size = 2
-            max_size = 4
-            min_size = 2
+            desired_size = 6
+            max_size = 6
+            min_size = 1
         }
     }
     eks-iam-access = {
