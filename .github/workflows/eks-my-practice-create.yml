@@ -1,9 +1,6 @@
 name: EKS-MY-PRACTICE CREATION
 
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
 jobs:
   terraform:
