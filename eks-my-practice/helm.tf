@@ -2,7 +2,7 @@ resource "null_resource" "kube-bootstrap" {
   depends_on = [module.eks]
 
   provisioner "local-exec" {
-    command = "aws eks update-kubeconfig --name ${module.eks.cluster_name}"
+    command = "aws eks update-kubeconfig --region ap-south-1 --name ${module.eks.cluster_name}"
   }
 }
 # resource "helm_release" "ebs_csi_driver" {
