@@ -29,6 +29,12 @@ module "eks"{
             k8s_groups = []
             access_scope_type = "cluster"
         }
+        runner = {
+            principal_arn = "arn:aws:iam::522814728660:role/eks-role-github-actions-runner-bapatlas.site"
+            policy_arn = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
+            k8s_groups = []
+            access_scope_type = "cluster"
+        }
     }
 }
 
