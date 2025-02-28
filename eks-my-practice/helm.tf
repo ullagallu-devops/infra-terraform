@@ -3,7 +3,7 @@ resource "null_resource" "kube-bootstrap" {
 
   provisioner "local-exec" {
     command = <<EOF
-aws eks update-kubeconfig --name ${module.eks.example.name}
+aws eks update-kubeconfig --name ${module.eks.name}
 kubectl create ns siva
 echo "Cluster setup completed"
 EOF
