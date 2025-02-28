@@ -1,10 +1,10 @@
 resource "null_resource" "kube-bootstrap" {
   depends_on = [module.eks]
-
-  provisioner "local-exec" {
-    command = <<EOF
-    aws eks update-kubeconfig  --name ${var.env}-eks
-    EOF
+   provisioner "local-exec" {
+    command = "aws eks update-kubeconfig --name ${module.eks.cluster_name}"
+  }
+  triggers = {
+    cluster_name = module.eks.cluster_name
   }
 }
 
