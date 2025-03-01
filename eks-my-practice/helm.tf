@@ -16,7 +16,7 @@ resource "null_resource" "create_namespaces" {
     EOT
   }
 
-  depends_on = [null_resource.eks_kubeconfig]
+  depends_on = [null_resource.kube-bootstrap]
 }
 resource "helm_release" "ebs_csi_driver" {
   depends_on = [null_resource.kube-bootstrap]
