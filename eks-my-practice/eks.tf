@@ -62,27 +62,3 @@ module "ebs_pod_identity" {
     namespace = "kube-system"
     service_account = "ebs-csi-controller-sa"
 }
-
-
-module "expense_sc"{
-    depends_on = [module.eks,null_resource.kube-bootstrap]
-    source = "../modules/eks-storage-class"
-    cluster_name = module.eks.cluster_name
-    storage_class_name = "expense"
-}
-
-# resource "kubernetes_annotations" "ebs_csi_annotation" {
-#   depends_on = [helm_release.ebs_csi_driver,kubernetes_storage_class.ebs,null_resource.kube-bootstrap]
-
-#   api_version = "v1"
-#   kind        = "ServiceAccount"
-
-#   metadata {
-#     name      = "ebs-csi-controller-sa"
-#     namespace = "kube-system"
-#   }
-
-#   annotations = {
-#     "eks.amazonaws.com/role-arn" = module.ebs_pod_identity.arn
-#   }
-# }
