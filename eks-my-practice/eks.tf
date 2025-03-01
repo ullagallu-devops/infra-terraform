@@ -66,7 +66,7 @@ module "ebs_pod_identity" {
 
 module "expense_sc"{
     depends_on = [module.eks,null_resource.kube-bootstrap]
-    source = "../modules/eks-stroage-class"
+    source = "../modules/eks-storage-class"
     storage_class_name = "expense"
 }
 
