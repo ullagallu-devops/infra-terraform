@@ -1,4 +1,5 @@
 resource "kubernetes_storage_class" "ebs" {
+  cluster_name = var.cluster_name
   metadata {
     name = var.storage_class_name
   }
@@ -17,4 +18,5 @@ resource "kubernetes_storage_class" "ebs" {
 }
 
 
+variable cluster_name{}
 variable "storage_class_name"{}
