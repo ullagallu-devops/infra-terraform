@@ -64,6 +64,7 @@ module "ebs_pod_identity" {
 }
 # Some times unable to provision volumes due to crendtial bound issue then simpley restart respected deployment that solves your problem
 # kubectl rollout restart deployment ebs-csi-controller -n kube-system
+# helm install aws-load-balancer-controller eks/aws-load-balancer-controller --set clusterName=dev-siva-cluster  --set region=ap-south-1  --set vpcId=vpc-02eb3fca8ea5f0dc1  -n kube-system --set serviceAccount.name=aws-load-balancer-controller
 
 module "alb_ingress_controller" {
     depends_on = [module.eks,helm_release.ebs_csi_driver]

@@ -17,27 +17,30 @@ resource "helm_release" "ebs_csi_driver" {
   create_namespace = false
 }
 
-# resource "helm_release" "alb_ingress_controller" {
-#   depends_on = [null_resource.kube-bootstrap]
+resource "helm_release" "aws_lb_controller" {
+  depends_on = [null_resource.kube-bootstrap,module.alb_ingress_controller]
+  name       = "aws-load-balancer-controller"
+  namespace  = "kube-system"
+  repository = "https://aws.github.io/eks-charts"
+  chart      = "aws-load-balancer-controller"
 
-#   name       = "aws-load-balancer-controller"
-#   repository = "https://aws.github.io/eks-charts"
-#   chart      = "aws-load-balancer-controller"
-#   namespace  = "aws-load-balancer-controller"
-#   create_namespace = true
+  set {
+    name  = "clusterName"
+    value = module.eks.cluster_name
+  }
 
-#   set {
-#     name  = "clusterName"
-#     value = module.eks.cluster_name
-#   }
-  
-#   set {
-#     name  = "serviceAccount.create"
-#     value = "false"
-#   }
+  set {
+    name  = "region"
+    value = var.aws_region
+  }
 
-#   set {
-#     name  = "serviceAccount.name"
-#     value = "aws-load-balancer-controller-sa"
-#   }
-# }
+  set {
+    name  = "vpcId"
+    value = module.vpc.vpc_id
+  }
+
+  set {
+    name  = "serviceAccount.name"
+    value = "aws-load-balancer-controller"
+  }
+}
