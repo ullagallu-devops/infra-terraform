@@ -35,4 +35,8 @@ resource "helm_release" "alb_ingress_controller" {
   chart      = "aws-load-balancer-controller"
   namespace  = "kube-system"
   create_namespace = false
+  set {
+    name  = "clusterName"
+    value = module.eks.cluster_name
+  }
 }
