@@ -62,3 +62,5 @@ module "ebs_pod_identity" {
     namespace = "kube-system"
     service_account = "ebs-csi-controller-sa"
 }
+# Some times unable to provision volumes due to crendtial bound issue then simpley restart respected deployment that solves your problem
+# kubectl rollout restart deployment ebs-csi-controller -n kube-system
