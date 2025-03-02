@@ -1,5 +1,5 @@
 resource "aws_iam_role" "this" {
-  name = "${var.environment}-eks-${var.irsa_role_name}-pod"
+  name = "${var.environment}-eks-${var.irsa_role_name}"
 
   assume_role_policy = jsonencode({
     "Version" : "2012-10-17",
