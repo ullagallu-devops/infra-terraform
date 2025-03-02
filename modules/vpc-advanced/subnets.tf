@@ -12,7 +12,7 @@ resource "aws_subnet" "public" {
         Name        = "${local.name}-public-${each.value.az_suffix}"
     },
     var.enable_kubernetes_k8s_tags ? {
-      "kubernetes.io/cluster/${var.environment}-eks" = "shared"
+      "kubernetes.io/cluster/${var.environment}-${var.project_name}-cluster" = "shared"
       "kubernetes.io/role/elb" = 1 } : {},
     var.common_tags
   )
@@ -29,7 +29,7 @@ resource "aws_subnet" "private" {
         Name        = "${local.name}-private-${each.value.az_suffix}"
     },
     var.enable_kubernetes_k8s_tags ? {
-      "kubernetes.io/cluster/${var.environment}-eks" = "shared"
+      "kubernetes.io/cluster/${var.environment}-${var.project_name}-cluster" = "shared"
       "kubernetes.io/role/elb" = 1 } : {},
     var.common_tags
   )
@@ -46,7 +46,7 @@ resource "aws_subnet" "database" {
      Name        = "${local.name}-database-${each.value.az_suffix}"
     },
     var.enable_kubernetes_k8s_tags ? 
-      {"kubernetes.io/cluster/${var.environment}-eks" = "shared"} : {},
+      {"kubernetes.io/cluster/${var.environment}-${var.project_name}-cluster" = "shared"} : {},
     var.common_tags
   )
 }
