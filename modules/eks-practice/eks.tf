@@ -4,7 +4,7 @@ locals{
 
 # Control Plane
 resource "aws_eks_cluster" "example" {
-  name = "${local.name}-cluster"
+  name = local.name
 
   access_config {
     authentication_mode = "API_AND_CONFIG_MAP"
