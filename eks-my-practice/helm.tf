@@ -36,7 +36,7 @@ resource "helm_release" "aws_lb_controller" {
 
   set {
     name  = "vpcId"
-    value = module.vpc.vpc_id
+    value = module.eks_vpc.vpc_id
   }
 
   set {
