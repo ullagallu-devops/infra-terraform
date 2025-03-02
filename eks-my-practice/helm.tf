@@ -39,4 +39,13 @@ resource "helm_release" "alb_ingress_controller" {
     name  = "clusterName"
     value = module.eks.cluster_name
   }
+  set {
+    name  = "vpcId"
+    value = "module.eks_vpc.vpc_id"
+  }
+  
+  set {
+    name  = "serviceAccount.name"
+    value = "aws-load-balancer-controller-sa"
+  }
 }
