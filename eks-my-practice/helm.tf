@@ -7,7 +7,7 @@ resource "null_resource" "kube-bootstrap" {
     command = "aws eks update-kubeconfig --region ap-south-1 --name ${module.eks.cluster_name}"
   }
 }
-resource "null_resource" "kube-bootstrap" {
+resource "null_resource" "kube-ns" {
   triggers = {
     always_run = timestamp()
   }
