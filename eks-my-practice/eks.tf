@@ -17,8 +17,8 @@ module "eks"{
         blue = {
             instance_types = ["t3a.medium"]
             capacity_type = "ON_DEMAND"
-            desired_size = 2
-            max_size = 2
+            desired_size = 6
+            max_size = 6
             min_size = 1
         }
     }

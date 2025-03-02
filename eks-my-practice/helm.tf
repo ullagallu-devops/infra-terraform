@@ -8,9 +8,9 @@ resource "null_resource" "kube-bootstrap" {
   }
 }
 resource "null_resource" "kube-ns" {
-  triggers = {
-    always_run = timestamp()
-  }
+  # triggers = {
+  #   always_run = timestamp()
+  # }
 
   provisioner "local-exec" {
     command = <<EOT
