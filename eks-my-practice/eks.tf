@@ -77,3 +77,22 @@ module "alb_ingress_controller" {
     namespace = "kube-system"
     service_account = "aws-load-balancer-controller"
 }
+
+module "external-dns" {
+    depends_on = [module.eks]
+    source = "../modules/eks-pod-identity"
+
+    environment = var.environment
+    irsa_role_name = "external-dns"
+    managed_policy_arns = ["arn:aws:iam::522814728660:policy/AllowExternalDNSUpdates"]
+    cluster_name = module.eks.cluster_name
+    namespace = "kube-system"
+    service_account = "external-dns"
+}
+
+
+
+
+
+
+

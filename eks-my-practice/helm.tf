@@ -44,3 +44,16 @@ resource "helm_release" "aws_lb_controller" {
     value = "aws-load-balancer-controller"
   }
 }
+
+
+resource "helm_release" "externs_dns" {
+  depends_on = [null_resource.kube-bootstrap]
+  name       = "external-dns"
+  repository = "https://kubernetes-sigs.github.io/aws-ebs-csi-driver"
+  chart      = "external-dns"
+  namespace  = "kube-system"
+  create_namespace = false
+}
+
+
+# helm upgrade --install external-dns external-dns/external-dns
