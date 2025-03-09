@@ -70,7 +70,6 @@ resource "aws_launch_template" "main" {
       encrypted   = true
     }
   }
-  vpc_security_group_ids = [aws_security_group.cluster.id]
   tag_specifications {
     resource_type = "instance"
     tags = {
