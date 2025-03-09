@@ -9,7 +9,7 @@ resource "null_resource" "kube-bootstrap" {
 }
 
 resource "helm_release" "ebs_csi_driver" {
-  depends_on = [null_resource.kube-bootstrap]
+  depends_on = [null_resource.kube-bootstrap,module.ebs_pod_identity]
   name       = "aws-ebs-csi-driver"
   repository = "https://kubernetes-sigs.github.io/aws-ebs-csi-driver"
   chart      = "aws-ebs-csi-driver"

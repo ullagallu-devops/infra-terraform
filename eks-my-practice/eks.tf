@@ -52,7 +52,7 @@ module "eks_addons" {
 }
 
 module "ebs_pod_identity" {
-    depends_on = [module.eks,helm_release.ebs_csi_driver]
+    depends_on = [module.eks]
     source = "../modules/eks-pod-identity"
 
     environment = var.environment
