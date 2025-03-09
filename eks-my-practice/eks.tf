@@ -16,7 +16,7 @@ module "eks"{
     node_groups = {
         blue = {
             instance_types = ["t3a.medium"]
-            capacity_type = "ON_DEMAND"
+            capacity_type = "SPOT"
             desired_size = 6
             max_size = 6
             min_size = 1
